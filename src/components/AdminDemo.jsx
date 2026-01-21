@@ -29,13 +29,13 @@ const AdminDemo = () => {
     { id: 'notifications', label: 'Notifications', icon: Bell },
   ];
 
-  // Sample data for demo
+  // Sample data for demo (English names)
   const sampleUsers = [
-    { name: 'Nguyen Minh Anh', email: 'minhanh@example.com', role: 'super_admin', status: 'active' },
-    { name: 'Tran Van Duc', email: 'vanduc@example.com', role: 'admin', status: 'active' },
-    { name: 'Le Thi Mai', email: 'thimai@example.com', role: 'viewer', status: 'active' },
-    { name: 'Pham Hoang Nam', email: 'hoangnam@example.com', role: 'viewer', status: 'pending' },
-    { name: 'Vo Thanh Hien', email: 'thanhhien@example.com', role: 'viewer', status: 'inactive' },
+    { name: 'Sarah Chen', email: 'sarah.chen@example.com', role: 'super_admin', status: 'active' },
+    { name: 'Michael Tran', email: 'michael.tran@example.com', role: 'admin', status: 'active' },
+    { name: 'Emily Nguyen', email: 'emily.nguyen@example.com', role: 'viewer', status: 'active' },
+    { name: 'David Lee', email: 'david.lee@example.com', role: 'viewer', status: 'pending' },
+    { name: 'Jessica Wang', email: 'jessica.wang@example.com', role: 'viewer', status: 'inactive' },
   ];
 
   const sampleTeams = [
@@ -250,11 +250,11 @@ const AdminDemo = () => {
 
             <div className="space-y-3">
               {[
-                { action: 'login_success', user: 'minhanh@example.com', time: '2 minutes ago' },
-                { action: 'page_view', user: 'vanduc@example.com', time: '5 minutes ago', detail: '/revenue' },
-                { action: 'login_success', user: 'thimai@example.com', time: '15 minutes ago' },
-                { action: 'page_view', user: 'minhanh@example.com', time: '20 minutes ago', detail: '/features' },
-                { action: 'logout', user: 'hoangnam@example.com', time: '1 hour ago' },
+                { action: 'login_success', user: 'sarah.chen@example.com', time: '2 minutes ago' },
+                { action: 'page_view', user: 'michael.tran@example.com', time: '5 minutes ago', detail: '/revenue' },
+                { action: 'login_success', user: 'emily.nguyen@example.com', time: '15 minutes ago' },
+                { action: 'page_view', user: 'sarah.chen@example.com', time: '20 minutes ago', detail: '/features' },
+                { action: 'logout', user: 'david.lee@example.com', time: '1 hour ago' },
               ].map((log, index) => (
                 <div
                   key={index}

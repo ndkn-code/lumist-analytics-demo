@@ -139,8 +139,11 @@ const NavItem = ({ item, isActive, isCollapsed, onClick }) => {
     );
 };
 
+// Demo mode: Use fixed date range ending June 30, 2025
+const DEMO_END_DATE = new Date(2025, 5, 30); // June 30, 2025
+
 const Layout = () => {
-    const [dateRange, setDateRange] = useState([subDays(new Date(), 30), new Date()]);
+    const [dateRange, setDateRange] = useState([subDays(DEMO_END_DATE, 30), DEMO_END_DATE]);
     const [startDate, endDate] = dateRange;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(true);

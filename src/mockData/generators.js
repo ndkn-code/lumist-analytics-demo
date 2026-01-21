@@ -212,15 +212,19 @@ export const generateWeeklyRetention = () => {
 
 /**
  * 6. Feature Adoption Generator
+ * Returns data with usage_date and feature_type fields to match daily_feature_adoption view
  */
 export const generateFeatureAdoption = () => {
+  // Features matching the original component's FEATURE_CONFIG
   const features = [
-    { name: 'practice_tests', baseAdoption: 0.78, trend: 'stable' },
-    { name: 'ai_tutor', baseAdoption: 0.15, trend: 'growing', growthRate: 0.127 },
-    { name: 'study_planner', baseAdoption: 0.40, trend: 'growing', growthRate: 0.05 },
-    { name: 'flashcards', baseAdoption: 0.45, trend: 'stable' },
-    { name: 'performance_analytics', baseAdoption: 0.61, trend: 'stable' },
-    { name: 'community_forum', baseAdoption: 0.30, trend: 'declining', declineRate: 0.03 },
+    { name: 'Assessment', baseAdoption: 0.78, trend: 'stable' },
+    { name: 'Brain Teaser', baseAdoption: 0.35, trend: 'growing', growthRate: 0.08 },
+    { name: 'Ask AI', baseAdoption: 0.15, trend: 'growing', growthRate: 0.127 },
+    { name: 'Session Review', baseAdoption: 0.40, trend: 'growing', growthRate: 0.05 },
+    { name: 'Collection Import', baseAdoption: 0.25, trend: 'stable' },
+    { name: 'Word Added', baseAdoption: 0.45, trend: 'stable' },
+    { name: 'Study Plan (Gen)', baseAdoption: 0.20, trend: 'growing', growthRate: 0.06 },
+    { name: 'Study Plan (Comp)', baseAdoption: 0.15, trend: 'growing', growthRate: 0.05 },
   ];
 
   const data = [];
@@ -251,10 +255,10 @@ export const generateFeatureAdoption = () => {
       adoption = Math.max(0.05, Math.min(0.95, adoption + variance));
 
       data.push({
-        date: dateString,
-        feature_name: feature.name,
+        usage_date: dateString,  // Matches daily_feature_adoption view
+        feature_type: feature.name,  // Matches daily_feature_adoption view
         unique_users: Math.round(dayDAU * adoption),
-        total_uses: Math.round(dayDAU * adoption * (1.5 + seededRandom(dayIndex) * 0.5))
+        total_usage: Math.round(dayDAU * adoption * (1.5 + seededRandom(dayIndex) * 0.5))
       });
     });
 
@@ -266,16 +270,13 @@ export const generateFeatureAdoption = () => {
 };
 
 /**
- * 7. Feature Usage Summary
+ * 7. Feature Usage Summary (Lifetime stats)
+ * Matches daily_feature_usage view with feature_type field
  */
 export const generateFeatureUsage = () => {
   return [
-    { feature_name: 'practice_tests', active_users: 1170, total_uses: 8450, adoption_rate: 0.78 },
-    { feature_name: 'ai_tutor', active_users: 510, total_uses: 2380, adoption_rate: 0.34 },
-    { feature_name: 'study_planner', active_users: 780, total_uses: 4200, adoption_rate: 0.52 },
-    { feature_name: 'flashcards', active_users: 675, total_uses: 12500, adoption_rate: 0.45 },
-    { feature_name: 'performance_analytics', active_users: 915, total_uses: 3800, adoption_rate: 0.61 },
-    { feature_name: 'community_forum', active_users: 345, total_uses: 1890, adoption_rate: 0.23 },
+    { feature_type: 'vocabularyWordsLimit', total_usage: 12500, unique_users: 850 },
+    { feature_type: 'errorBankCapacity', total_usage: 3800, unique_users: 620 },
   ];
 };
 
@@ -348,38 +349,39 @@ export const generateSignupCohortConversion = () => {
  */
 export const generateTopReferrers = () => {
   return [
-    { referrer_name: 'Nguyen Minh Anh', referral_code: 'MINHANH25', referred_users: 28, conversions: 8, revenue: 720 },
-    { referrer_name: 'Tran Van Duc', referral_code: 'VANDUC99', referred_users: 22, conversions: 6, revenue: 540 },
-    { referrer_name: 'Le Thi Mai', referral_code: 'THIMAI2025', referred_users: 19, conversions: 5, revenue: 450 },
-    { referrer_name: 'Pham Hoang Nam', referral_code: 'HOANGNAM', referred_users: 15, conversions: 4, revenue: 360 },
-    { referrer_name: 'Vo Thanh Hien', referral_code: 'THANHHIEN', referred_users: 12, conversions: 3, revenue: 270 },
+    { referrer_name: 'Sarah Chen', referral_code: 'SARAH25', referred_users: 28, conversions: 8, revenue: 720 },
+    { referrer_name: 'Michael Tran', referral_code: 'MIKE99', referred_users: 22, conversions: 6, revenue: 540 },
+    { referrer_name: 'Emily Nguyen', referral_code: 'EMILY2025', referred_users: 19, conversions: 5, revenue: 450 },
+    { referrer_name: 'David Lee', referral_code: 'DAVID', referred_users: 15, conversions: 4, revenue: 360 },
+    { referrer_name: 'Jessica Wang', referral_code: 'JESSICA', referred_users: 12, conversions: 3, revenue: 270 },
   ];
 };
 
 /**
- * 14. Revenue - Monthly Revenue Summary
+ * 14. Revenue - Monthly Revenue Summary (matches monthly_revenue_summary view)
  */
 export const generateMonthlyRevenue = () => {
   return [
-    { month: '2025-01', mrr: 450, subscribers: 5, churn_count: 0, new_subscribers: 5 },
-    { month: '2025-02', mrr: 720, subscribers: 8, churn_count: 0, new_subscribers: 3 },
-    { month: '2025-03', mrr: 1080, subscribers: 12, churn_count: 1, new_subscribers: 5 },
-    { month: '2025-04', mrr: 1350, subscribers: 15, churn_count: 2, new_subscribers: 5 },
-    { month: '2025-05', mrr: 1890, subscribers: 21, churn_count: 2, new_subscribers: 8 },
-    { month: '2025-06', mrr: 2340, subscribers: 26, churn_count: 3, new_subscribers: 8 },
+    { month: '2025-06', net_revenue: 2340, transaction_count: 8, unique_customers: 8 },
+    { month: '2025-05', net_revenue: 1890, transaction_count: 8, unique_customers: 7 },
+    { month: '2025-04', net_revenue: 1350, transaction_count: 5, unique_customers: 5 },
+    { month: '2025-03', net_revenue: 1080, transaction_count: 5, unique_customers: 4 },
+    { month: '2025-02', net_revenue: 720, transaction_count: 3, unique_customers: 3 },
+    { month: '2025-01', net_revenue: 450, transaction_count: 5, unique_customers: 5 },
   ];
 };
 
 /**
- * 15. Churn Summary
+ * 15. Churn Summary (matches churn_summary view format)
  */
 export const generateChurnSummary = () => {
   return {
+    total_subscribers: 32,
     active_subscribers: 26,
-    churned_this_month: 3,
-    at_risk_users: 5,
-    churn_rate: 0.103,
-    avg_lifetime_months: 4.2
+    churned_subscribers: 6,
+    churn_rate_percent: 18.8,
+    expiring_7_days: 2,
+    expiring_30_days: 5
   };
 };
 
@@ -394,8 +396,8 @@ export const generateUserSubscriptions = () => {
   ];
 
   const statuses = ['active', 'active', 'active', 'active', 'expiring_soon', 'at_risk', 'expired'];
-  const firstNames = ['Minh', 'Anh', 'Duc', 'Mai', 'Nam', 'Hien', 'Linh', 'Tuan', 'Huong', 'Khoa'];
-  const lastNames = ['Nguyen', 'Tran', 'Le', 'Pham', 'Vo', 'Hoang', 'Dang', 'Bui', 'Do', 'Ngo'];
+  const firstNames = ['Sarah', 'Michael', 'Emily', 'David', 'Jessica', 'James', 'Lisa', 'Robert', 'Jennifer', 'William'];
+  const lastNames = ['Chen', 'Tran', 'Nguyen', 'Lee', 'Wang', 'Kim', 'Park', 'Liu', 'Zhang', 'Huang'];
 
   const subscriptions = [];
   for (let i = 0; i < 30; i++) {
@@ -421,10 +423,11 @@ export const generateUserSubscriptions = () => {
 };
 
 /**
- * 17. Transactions
+ * 17. Transactions (unified_transactions view format)
  */
 export const generateTransactions = () => {
-  const providers = ['stripe', 'paypal', 'vnpay', 'momo'];
+  const providers = ['stripe', 'vnpay', 'zalopay'];
+  const plans = ['1month', '3months', '6months', 'lifetime'];
   const transactions = [];
 
   for (let i = 0; i < 60; i++) {
@@ -433,16 +436,19 @@ export const generateTransactions = () => {
     date.setDate(date.getDate() + dayOffset);
 
     const provider = providers[Math.floor(seededRandom(i) * providers.length)];
-    const isVND = provider === 'vnpay' || provider === 'momo';
-    const baseAmount = [49, 99, 149][Math.floor(seededRandom(i + 50) * 3)];
+    const isVND = provider === 'vnpay' || provider === 'zalopay';
+    const plan = plans[Math.floor(seededRandom(i + 25) * plans.length)];
+    const baseAmount = plan === '1month' ? 49 : plan === '3months' ? 99 : plan === '6months' ? 149 : 299;
 
     transactions.push({
       id: `txn-${i + 1}`,
       user_id: `user-${(i % 30) + 1}`,
       amount: isVND ? baseAmount * 25000 : baseAmount,
       currency: isVND ? 'VND' : 'USD',
-      provider: provider,
+      payment_provider: provider,
+      subscription_plan: plan,
       status: i < 52 ? 'success' : i < 57 ? 'pending' : 'failed',
+      transaction_date: formatDate(date),
       created_at: formatDate(date) + 'T' + String(10 + (i % 12)).padStart(2, '0') + ':30:00Z'
     });
   }
@@ -451,7 +457,7 @@ export const generateTransactions = () => {
 };
 
 /**
- * 18. Social Media - Facebook Page Metrics
+ * 18. Social Media - Facebook Page Metrics (account_metrics_daily format)
  */
 export const generateFacebookMetrics = () => {
   const data = [];
@@ -471,18 +477,16 @@ export const generateFacebookMetrics = () => {
 
     // Reach varies significantly
     const reach = randomInRange(5000, 15000);
-    const impressions = Math.round(reach * (1.5 + seededRandom(dayIndex) * 0.5));
+    const engagements = randomInRange(150, 600);
 
     data.push({
-      date: dateString,
+      metric_date: dateString,
       account_id: 'fb-demo-account',
-      followers: followers,
+      followers_count: followers,
+      daily_follows: randomInRange(5, 40),
       reach: reach,
-      impressions: impressions,
-      engagement_rate: (3.5 + seededRandom(dayIndex) * 1.5) / 100,
-      likes: Math.round(reach * 0.03),
-      comments: Math.round(reach * 0.008),
-      shares: Math.round(reach * 0.005)
+      engagements: engagements,
+      page_views: randomInRange(50, 200)
     });
 
     currentDate.setDate(currentDate.getDate() + 1);
@@ -493,7 +497,7 @@ export const generateFacebookMetrics = () => {
 };
 
 /**
- * 19. Social Media - Facebook Posts
+ * 19. Social Media - Facebook Posts (posts table format)
  */
 export const generateFacebookPosts = () => {
   const postTypes = ['study_tips', 'meme', 'success_story', 'announcement', 'motivation'];
@@ -510,14 +514,21 @@ export const generateFacebookPosts = () => {
     posts.push({
       id: `fb-post-${i + 1}`,
       account_id: 'fb-demo-account',
-      post_id: `${Date.now() - i * 100000}`,
-      caption: getPostCaption(type, i),
+      platform_post_id: `${Date.now() - i * 100000}`,
+      content_text: getPostCaption(type, i),
       post_type: type,
-      likes: Math.round(randomInRange(200, 800) * baseEngagement),
-      comments: Math.round(randomInRange(20, 100) * baseEngagement),
-      shares: Math.round(randomInRange(10, 50) * baseEngagement),
       reach: randomInRange(3000, 12000),
-      created_at: formatDate(date) + 'T14:00:00Z'
+      clicks: Math.round(randomInRange(50, 200) * baseEngagement),
+      reactions_breakdown: {
+        like: Math.round(randomInRange(100, 400) * baseEngagement),
+        love: Math.round(randomInRange(20, 80) * baseEngagement),
+        haha: Math.round(randomInRange(5, 30) * baseEngagement),
+        wow: Math.round(randomInRange(2, 15) * baseEngagement),
+        sad: Math.round(randomInRange(0, 5)),
+        angry: Math.round(randomInRange(0, 3))
+      },
+      published_at: formatDate(date) + 'T14:00:00Z',
+      permalink: `https://facebook.com/lumist/posts/${i + 1}`
     });
   }
 
@@ -703,21 +714,21 @@ export const generateSocialAccounts = () => {
       platform: 'facebook',
       platform_account_id: '123456789',
       account_name: 'Lumist SAT Prep',
-      profile_picture: null
+      profile_picture: '/logo-icon.png'
     },
     {
       id: 'th-demo-account',
       platform: 'threads',
       platform_account_id: '987654321',
       account_name: 'Lumist Threads',
-      profile_picture: null
+      profile_picture: '/logo-icon.png'
     },
     {
       id: 'ig-demo-account',
       platform: 'instagram',
       platform_account_id: '111222333',
       account_name: 'Lumist Instagram',
-      profile_picture: null
+      profile_picture: '/logo-icon.png'
     }
   ];
 };
@@ -756,6 +767,76 @@ export const generateDailyMetricsSummary = (platform) => {
   return data;
 };
 
+/**
+ * 26. Threads Metrics (account_metrics_daily format)
+ */
+export const generateThreadsMetrics = () => {
+  const data = [];
+  const startDate = new Date(2024, 11, 5);
+  const endDate = new Date(2025, 5, 30);
+
+  let followers = 1200;
+  let currentDate = new Date(startDate);
+  let dayIndex = 0;
+
+  while (currentDate <= endDate) {
+    const dateString = formatDate(currentDate);
+
+    // Follower growth: 1200 -> 4500 over ~7 months
+    const dailyGrowth = (4500 - 1200) / 210;
+    followers = Math.round(1200 + (dailyGrowth * dayIndex) + (seededRandom(dayIndex + 500) * 30 - 15));
+
+    const reach = randomInRange(2000, 8000);
+    const engagements = randomInRange(100, 400);
+
+    data.push({
+      metric_date: dateString,
+      account_id: 'th-demo-account',
+      followers_count: followers,
+      daily_follows: randomInRange(3, 25),
+      reach: reach,
+      engagements: engagements,
+      page_views: randomInRange(30, 120)
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex++;
+  }
+
+  return data;
+};
+
+/**
+ * 27. Threads Posts (posts table format)
+ */
+export const generateThreadsPosts = () => {
+  const posts = [];
+
+  for (let i = 0; i < 30; i++) {
+    const daysAgo = i * 6;
+    const date = new Date(2025, 5, 30);
+    date.setDate(date.getDate() - daysAgo);
+
+    posts.push({
+      id: `th-post-${i + 1}`,
+      account_id: 'th-demo-account',
+      platform_post_id: `th-${Date.now() - i * 100000}`,
+      content_text: `SAT prep tip #${i + 1}: Focus on understanding concepts, not just memorizing answers. 📚 #SATPrep #StudyTips`,
+      reach: randomInRange(1500, 6000),
+      clicks: randomInRange(20, 100),
+      reactions_breakdown: {
+        like: randomInRange(50, 200),
+        love: randomInRange(10, 50),
+        haha: randomInRange(2, 15)
+      },
+      published_at: formatDate(date) + 'T10:00:00Z',
+      permalink: `https://threads.net/lumist/post/${i + 1}`
+    });
+  }
+
+  return posts;
+};
+
 // Export all generators
 export default {
   generateDAU,
@@ -777,6 +858,8 @@ export default {
   generateTransactions,
   generateFacebookMetrics,
   generateFacebookPosts,
+  generateThreadsMetrics,
+  generateThreadsPosts,
   generateDemographics,
   generateInsights,
   generateAttemptDurations,

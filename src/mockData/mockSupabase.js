@@ -25,6 +25,8 @@ import {
   generateTransactions,
   generateFacebookMetrics,
   generateFacebookPosts,
+  generateThreadsMetrics,
+  generateThreadsPosts,
   generateDemographics,
   generateInsights,
   generateAttemptDurations,
@@ -223,9 +225,30 @@ const tableDataMap = {
 
   // Social analytics (social_analytics schema)
   'social_accounts': () => getOrGenerateData('social_accounts', generateSocialAccounts),
-  'account_metrics_daily': () => getOrGenerateData('fb_metrics', generateFacebookMetrics),
-  'posts': () => getOrGenerateData('fb_posts', generateFacebookPosts),
-  'post_metrics_daily': () => getOrGenerateData('fb_posts', generateFacebookPosts),
+  'account_metrics_daily': () => {
+    // Combine FB and Threads metrics
+    const fb = getOrGenerateData('fb_metrics', generateFacebookMetrics);
+    const th = getOrGenerateData('th_metrics', generateThreadsMetrics);
+    return [...fb, ...th];
+  },
+  'posts': () => {
+    // Combine FB and Threads posts
+    const fb = getOrGenerateData('fb_posts', generateFacebookPosts);
+    const th = getOrGenerateData('th_posts', generateThreadsPosts);
+    return [...fb, ...th];
+  },
+  'post_metrics_daily': () => {
+    // Post metrics - reuse posts data with metric fields
+    const fb = getOrGenerateData('fb_posts', generateFacebookPosts);
+    const th = getOrGenerateData('th_posts', generateThreadsPosts);
+    return [...fb, ...th].map(post => ({
+      post_id: post.id,
+      metric_date: post.published_at?.split('T')[0] || '2025-06-01',
+      reach: post.reach,
+      clicks: post.clicks,
+      reactions_breakdown: post.reactions_breakdown
+    }));
+  },
   'demographic_metrics_daily': () => [getOrGenerateData('demographics', generateDemographics)],
   'daily_metrics_summary': () => {
     // Combine FB and Threads metrics
@@ -257,7 +280,16 @@ const tableDataMap = {
 
 // Create mock Supabase client
 const createMockSupabaseClient = (schemaName = 'public_analytics') => {
-  return {
+  const client = {
+    // Support .schema('name').from('table') pattern used by Revenue components
+    schema: (name) => ({
+      from: (tableName) => {
+        const dataGenerator = tableDataMap[tableName];
+        const data = dataGenerator ? dataGenerator() : [];
+        return new MockQueryBuilder(tableName, data);
+      }
+    }),
+
     from: (tableName) => {
       const dataGenerator = tableDataMap[tableName];
       const data = dataGenerator ? dataGenerator() : [];

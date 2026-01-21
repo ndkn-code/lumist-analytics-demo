@@ -5,28 +5,32 @@ import { Calendar } from 'lucide-react';
 import { subDays, startOfDay, isSameDay } from 'date-fns';
 
 // Quick filter presets
-// Note: 'days' represents the offset from today (subDays value)
-// For "Last 7 Days": Today + 6 days back = 7 total days (not 8!)
-// For "Last 30 Days": Today + 29 days back = 30 total days (not 31!)
+// Note: 'days' represents the offset from the reference date (subDays value)
+// For "Last 7 Days": Reference date + 6 days back = 7 total days (not 8!)
+// For "Last 30 Days": Reference date + 29 days back = 30 total days (not 31!)
 const QUICK_FILTERS = [
-    { label: '7D', days: 6 },   // 7 days total: today + 6 days back
-    { label: '30D', days: 29 }, // 30 days total: today + 29 days back
+    { label: '7D', days: 6 },   // 7 days total: reference + 6 days back
+    { label: '30D', days: 29 }, // 30 days total: reference + 29 days back
     { label: 'All', days: 'all' },
 ];
 
-// Project genesis date for "All Time" filter
-// Using early date to ensure all revenue transactions are captured
-const PROJECT_START_DATE = new Date('2020-01-01');
+// Demo mode: Use fixed date range (Jan 1 - Jun 30, 2025)
+// This ensures filters work with mock data
+const DEMO_END_DATE = new Date(2025, 5, 30);   // June 30, 2025
+const PROJECT_START_DATE = new Date(2025, 0, 1); // Jan 1, 2025
+
+// Helper to get reference date (demo uses fixed end date)
+const getReferenceDate = () => DEMO_END_DATE;
 
 const DateRangeFilter = ({ startDate, endDate, onChange }) => {
     // Check if current range matches a quick filter preset
     const activePreset = useMemo(() => {
         if (!startDate || !endDate) return null;
 
-        const today = startOfDay(new Date());
-        const endIsToday = isSameDay(startOfDay(endDate), today);
+        const referenceDate = startOfDay(getReferenceDate());
+        const endIsReference = isSameDay(startOfDay(endDate), referenceDate);
 
-        if (!endIsToday) return null;
+        if (!endIsReference) return null;
 
         // Check "All Time" first
         if (isSameDay(startOfDay(startDate), startOfDay(PROJECT_START_DATE))) {
@@ -35,7 +39,7 @@ const DateRangeFilter = ({ startDate, endDate, onChange }) => {
 
         for (const filter of QUICK_FILTERS) {
             if (filter.days === 'all') continue;
-            const presetStart = startOfDay(subDays(new Date(), filter.days));
+            const presetStart = startOfDay(subDays(getReferenceDate(), filter.days));
             if (isSameDay(startOfDay(startDate), presetStart)) {
                 return filter.days;
             }
@@ -46,10 +50,10 @@ const DateRangeFilter = ({ startDate, endDate, onChange }) => {
     // Handle quick filter button clicks
     const handleQuickFilter = (days) => {
         if (days === 'all') {
-            onChange([PROJECT_START_DATE, new Date()]);
+            onChange([PROJECT_START_DATE, getReferenceDate()]);
         } else {
-            const newStart = subDays(new Date(), days);
-            const newEnd = new Date();
+            const newStart = subDays(getReferenceDate(), days);
+            const newEnd = getReferenceDate();
             onChange([newStart, newEnd]);
         }
     };
@@ -110,7 +114,7 @@ const DateRangeFilter = ({ startDate, endDate, onChange }) => {
                         selectsStart
                         startDate={startDate}
                         endDate={endDate}
-                        maxDate={endDate || new Date()}
+                        maxDate={endDate || getReferenceDate()}
                         className="w-full bg-gray-50 border border-gray-200 rounded-md md:rounded-lg pl-7 md:pl-8 pr-2 md:pr-3 py-1 md:py-1.5
                                    text-gray-700 text-xs md:text-sm font-medium
                                    cursor-pointer outline-none min-w-[100px] md:min-w-[130px]
@@ -153,7 +157,7 @@ const DateRangeFilter = ({ startDate, endDate, onChange }) => {
                         startDate={startDate}
                         endDate={endDate}
                         minDate={startDate}
-                        maxDate={new Date()}
+                        maxDate={getReferenceDate()}
                         className="w-full bg-gray-50 border border-gray-200 rounded-md md:rounded-lg pl-7 md:pl-8 pr-2 md:pr-3 py-1 md:py-1.5
                                    text-gray-700 text-xs md:text-sm font-medium
                                    cursor-pointer outline-none min-w-[100px] md:min-w-[130px]
