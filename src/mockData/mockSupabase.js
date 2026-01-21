@@ -33,6 +33,13 @@ import {
   generateExchangeRates,
   generateSocialAccounts,
   generateDailyMetricsSummary,
+  generateInstagramMetrics,
+  generateInstagramPosts,
+  generateTikTokMetrics,
+  generateTikTokPosts,
+  generateDiscordLatestStats,
+  generateDiscordMemberGrowth,
+  generateDiscordDailySummary,
 } from './generators';
 
 // Cache generated data for consistency across queries
@@ -226,22 +233,28 @@ const tableDataMap = {
   // Social analytics (social_analytics schema)
   'social_accounts': () => getOrGenerateData('social_accounts', generateSocialAccounts),
   'account_metrics_daily': () => {
-    // Combine FB and Threads metrics
+    // Combine all platform metrics
     const fb = getOrGenerateData('fb_metrics', generateFacebookMetrics);
     const th = getOrGenerateData('th_metrics', generateThreadsMetrics);
-    return [...fb, ...th];
+    const ig = getOrGenerateData('ig_metrics', generateInstagramMetrics);
+    const tt = getOrGenerateData('tt_metrics', generateTikTokMetrics);
+    return [...fb, ...th, ...ig, ...tt];
   },
   'posts': () => {
-    // Combine FB and Threads posts
+    // Combine all platform posts
     const fb = getOrGenerateData('fb_posts', generateFacebookPosts);
     const th = getOrGenerateData('th_posts', generateThreadsPosts);
-    return [...fb, ...th];
+    const ig = getOrGenerateData('ig_posts', generateInstagramPosts);
+    const tt = getOrGenerateData('tt_posts', generateTikTokPosts);
+    return [...fb, ...th, ...ig, ...tt];
   },
   'post_metrics_daily': () => {
     // Post metrics - reuse posts data with metric fields
     const fb = getOrGenerateData('fb_posts', generateFacebookPosts);
     const th = getOrGenerateData('th_posts', generateThreadsPosts);
-    return [...fb, ...th].map(post => ({
+    const ig = getOrGenerateData('ig_posts', generateInstagramPosts);
+    const tt = getOrGenerateData('tt_posts', generateTikTokPosts);
+    return [...fb, ...th, ...ig, ...tt].map(post => ({
       post_id: post.id,
       metric_date: post.published_at?.split('T')[0] || '2025-06-01',
       reach: post.reach,
@@ -249,13 +262,19 @@ const tableDataMap = {
       reactions_breakdown: post.reactions_breakdown
     }));
   },
-  'demographic_metrics_daily': () => [getOrGenerateData('demographics', generateDemographics)],
+  'demographic_metrics_daily': () => getOrGenerateData('demographics', generateDemographics),
   'daily_metrics_summary': () => {
-    // Combine FB and Threads metrics
+    // Combine all platform metrics
     const fb = generateDailyMetricsSummary('facebook');
     const th = generateDailyMetricsSummary('threads');
-    return [...fb, ...th];
+    const ig = generateDailyMetricsSummary('instagram');
+    const tt = generateDailyMetricsSummary('tiktok');
+    return [...fb, ...th, ...ig, ...tt];
   },
+  // Discord tables
+  'discord_latest_stats': () => [getOrGenerateData('discord_stats', generateDiscordLatestStats)],
+  'discord_member_growth': () => getOrGenerateData('discord_growth', generateDiscordMemberGrowth),
+  'discord_daily_summary': () => getOrGenerateData('discord_summary', generateDiscordDailySummary),
 
   // Identity schema (for admin - read-only in demo)
   'user_profiles': () => generateUserSubscriptions().map((s, i) => ({

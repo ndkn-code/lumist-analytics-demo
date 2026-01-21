@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, PieChart, MapPin, Menu, X, LogOut, Share2, Wallet, Shield, UserPlus, Info } from 'lucide-react';
+import { LayoutDashboard, PieChart, Menu, X, LogOut, Share2, Wallet, Shield, UserPlus, Info } from 'lucide-react';
 import DateRangeFilter from './DateRangeFilter';
 import { subDays } from 'date-fns';
 import { useAuth } from '../auth';
@@ -28,12 +28,6 @@ const NAV_SECTIONS = [
             { path: '/revenue', label: 'Revenue', icon: Wallet },
             { path: '/acquisition', label: 'Acquisition', icon: UserPlus },
             { path: '/social-media', label: 'Social Media', icon: Share2 },
-        ]
-    },
-    {
-        header: 'UTILITIES',
-        items: [
-            { path: '/sat-tracker', label: 'SAT Seat Finder', icon: MapPin },
         ]
     },
     {

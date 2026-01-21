@@ -15,8 +15,6 @@ import Layout from './components/Layout';
 import UserEngagement from './components/UserEngagement';
 import FeatureAdoption from './components/FeatureAdoption';
 
-// Demo placeholder for SAT Tracker
-import SatTrackerDemo from './components/SatTrackerDemo';
 
 // Demo placeholder for Admin
 import AdminDemo from './components/AdminDemo';
@@ -58,8 +56,20 @@ import {
     DiscordAudience,
     DiscordFunnel
 } from './components/SocialMedia/Discord';
-import InstagramPlaceholder from './components/SocialMedia/Instagram/InstagramPlaceholder';
-import TikTokPlaceholder from './components/SocialMedia/TikTok/TikTokPlaceholder';
+import {
+    InstagramLayout,
+    InstagramOverview,
+    InstagramAudience,
+    InstagramContent,
+    InstagramEngagement
+} from './components/SocialMedia/Instagram';
+import {
+    TikTokLayout,
+    TikTokOverview,
+    TikTokAudience,
+    TikTokContent,
+    TikTokEngagement
+} from './components/SocialMedia/TikTok';
 
 function App() {
     return (
@@ -79,9 +89,6 @@ function App() {
                             <Route index element={<AcquisitionOverview />} />
                             <Route path="cohorts" element={<AcquisitionCohorts />} />
                         </Route>
-
-                        {/* SAT Tracker - Demo Placeholder */}
-                        <Route path="sat-tracker" element={<SatTrackerDemo />} />
 
                         {/* Admin Panel - Demo Placeholder */}
                         <Route path="admin" element={<AdminDemo />} />
@@ -125,9 +132,23 @@ function App() {
                                 <Route path="funnel" element={<DiscordFunnel />} />
                             </Route>
 
-                            {/* Other platform placeholders */}
-                            <Route path="instagram" element={<InstagramPlaceholder />} />
-                            <Route path="tiktok" element={<TikTokPlaceholder />} />
+                            {/* Instagram Routes */}
+                            <Route path="instagram" element={<InstagramLayout />}>
+                                <Route index element={<InstagramOverview />} />
+                                <Route path="overview" element={<InstagramOverview />} />
+                                <Route path="audience" element={<InstagramAudience />} />
+                                <Route path="content" element={<InstagramContent />} />
+                                <Route path="engagement" element={<InstagramEngagement />} />
+                            </Route>
+
+                            {/* TikTok Routes */}
+                            <Route path="tiktok" element={<TikTokLayout />}>
+                                <Route index element={<TikTokOverview />} />
+                                <Route path="overview" element={<TikTokOverview />} />
+                                <Route path="audience" element={<TikTokAudience />} />
+                                <Route path="content" element={<TikTokContent />} />
+                                <Route path="engagement" element={<TikTokEngagement />} />
+                            </Route>
                         </Route>
                     </Route>
 

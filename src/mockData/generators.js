@@ -609,36 +609,226 @@ const getPostCaption = (type, index) => {
 
 /**
  * 20. Social Media - Demographics
+ * Returns array of records matching demographic_metrics_daily view format
+ * with demographic_type and breakdown_values fields
  */
 export const generateDemographics = () => {
-  return {
-    age_groups: [
-      { range: '13-17', percentage: 45 },
-      { range: '18-24', percentage: 35 },
-      { range: '25-34', percentage: 12 },
-      { range: '35-44', percentage: 5 },
-      { range: '45+', percentage: 3 },
-    ],
-    gender: [
-      { type: 'female', percentage: 58 },
-      { type: 'male', percentage: 40 },
-      { type: 'other', percentage: 2 },
-    ],
-    countries: [
-      { country: 'Vietnam', percentage: 82 },
-      { country: 'United States', percentage: 8 },
-      { country: 'Singapore', percentage: 4 },
-      { country: 'Australia', percentage: 3 },
-      { country: 'Other', percentage: 3 },
-    ],
-    cities: [
-      { city: 'Ho Chi Minh City', percentage: 42 },
-      { city: 'Hanoi', percentage: 28 },
-      { city: 'Da Nang', percentage: 8 },
-      { city: 'Hai Phong', percentage: 5 },
-      { city: 'Other', percentage: 17 },
-    ],
-  };
+  // Total followers ~8,900 for Facebook
+  const fbTotalFollowers = 8900;
+
+  return [
+    // Facebook Country Demographics (user-specified data)
+    {
+      id: 'fb-demo-country',
+      account_id: 'fb-demo-account',
+      demographic_type: 'country',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'VN': 8010,    // Vietnam - 90%
+        'US': 445,     // USA - 5%
+        'AU': 178,     // Australia - 2%
+        'SG': 133,     // Singapore - 1.5%
+        'TH': 67,      // Thailand - 0.75%
+        'MY': 67       // Malaysia - 0.75%
+      }
+    },
+    // Facebook City Demographics (user-specified data)
+    {
+      id: 'fb-demo-city',
+      account_id: 'fb-demo-account',
+      demographic_type: 'city',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'Ho Chi Minh City, Vietnam': 3560,   // 40%
+        'Hanoi, Vietnam': 2670,              // 30%
+        'Da Nang, Vietnam': 890,             // 10%
+        'Can Tho, Vietnam': 445,             // 5%
+        'Hai Phong, Vietnam': 356,           // 4%
+        'Nha Trang, Vietnam': 267,           // 3%
+        'Hue, Vietnam': 178,                 // 2%
+        'Bien Hoa, Vietnam': 178,            // 2%
+        'Da Lat, Vietnam': 133,              // 1.5%
+        'Vung Tau, Vietnam': 89,             // 1%
+        'Sydney, AU': 89,                    // 1%
+        'Tampa, FL': 45                      // 0.5%
+      }
+    },
+    // Facebook Age/Gender Demographics
+    {
+      id: 'fb-demo-age',
+      account_id: 'fb-demo-account',
+      demographic_type: 'age',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        '13-17_M': Math.round(fbTotalFollowers * 0.12),
+        '13-17_F': Math.round(fbTotalFollowers * 0.15),
+        '18-24_M': Math.round(fbTotalFollowers * 0.25),
+        '18-24_F': Math.round(fbTotalFollowers * 0.28),
+        '25-34_M': Math.round(fbTotalFollowers * 0.08),
+        '25-34_F': Math.round(fbTotalFollowers * 0.07),
+        '35-44_M': Math.round(fbTotalFollowers * 0.02),
+        '35-44_F': Math.round(fbTotalFollowers * 0.02),
+        '45+_M': Math.round(fbTotalFollowers * 0.005),
+        '45+_F': Math.round(fbTotalFollowers * 0.005)
+      }
+    },
+    // Threads Country Demographics (user-specified data)
+    {
+      id: 'th-demo-country',
+      account_id: 'th-demo-account',
+      demographic_type: 'country',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'VN': 2800,    // Vietnam - 88%
+        'US': 190,     // USA - 6%
+        'SG': 95,      // Singapore - 3%
+        'AU': 48,      // Australia - 1.5%
+        'TH': 48       // Thailand - 1.5%
+      }
+    },
+    // Threads City Demographics (user-specified data)
+    {
+      id: 'th-demo-city',
+      account_id: 'th-demo-account',
+      demographic_type: 'city',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'Ho Chi Minh City, Vietnam': 1270,   // 40%
+        'Hanoi, Vietnam': 950,               // 30%
+        'Da Nang, Vietnam': 320,             // 10%
+        'Can Tho, Vietnam': 160,             // 5%
+        'Hai Phong, Vietnam': 127,           // 4%
+        'Nha Trang, Vietnam': 95,            // 3%
+        'Hue, Vietnam': 63,                  // 2%
+        'Sydney, AU': 48,                    // 1.5%
+        'San Francisco, CA': 48              // 1.5%
+      }
+    },
+    // Threads Age Demographics
+    {
+      id: 'th-demo-age',
+      account_id: 'th-demo-account',
+      demographic_type: 'age',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        '13-17_M': 380,
+        '13-17_F': 445,
+        '18-24_M': 730,
+        '18-24_F': 825,
+        '25-34_M': 200,
+        '25-34_F': 175,
+        '35-44_M': 65,
+        '35-44_F': 65,
+        '45+_M': 48,
+        '45+_F': 47
+      }
+    },
+    // Instagram Country Demographics
+    {
+      id: 'ig-demo-country',
+      account_id: 'ig-demo-account',
+      demographic_type: 'country',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'VN': 3825,    // Vietnam - 85%
+        'US': 360,     // USA - 8%
+        'SG': 135,     // Singapore - 3%
+        'AU': 90,      // Australia - 2%
+        'TH': 90       // Thailand - 2%
+      }
+    },
+    // Instagram City Demographics
+    {
+      id: 'ig-demo-city',
+      account_id: 'ig-demo-account',
+      demographic_type: 'city',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'Ho Chi Minh City, Vietnam': 1575,   // 35%
+        'Hanoi, Vietnam': 1350,              // 30%
+        'Da Nang, Vietnam': 450,             // 10%
+        'Can Tho, Vietnam': 225,             // 5%
+        'Hai Phong, Vietnam': 180,           // 4%
+        'Los Angeles, CA': 135,              // 3%
+        'Sydney, AU': 90,                    // 2%
+        'Singapore, SG': 90,                 // 2%
+        'San Francisco, CA': 68,             // 1.5%
+        'New York, NY': 68                   // 1.5%
+      }
+    },
+    // Instagram Age Demographics (younger skew)
+    {
+      id: 'ig-demo-age',
+      account_id: 'ig-demo-account',
+      demographic_type: 'age',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        '13-17_M': 630,   // 14%
+        '13-17_F': 765,   // 17%
+        '18-24_M': 900,   // 20%
+        '18-24_F': 1080,  // 24%
+        '25-34_M': 315,   // 7%
+        '25-34_F': 360,   // 8%
+        '35-44_M': 135,   // 3%
+        '35-44_F': 180,   // 4%
+        '45+_M': 68,      // 1.5%
+        '45+_F': 68       // 1.5%
+      }
+    },
+    // TikTok Country Demographics
+    {
+      id: 'tt-demo-country',
+      account_id: 'tt-demo-account',
+      demographic_type: 'country',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'VN': 9840,    // Vietnam - 82%
+        'US': 1200,    // USA - 10%
+        'SG': 360,     // Singapore - 3%
+        'AU': 240,     // Australia - 2%
+        'TH': 180,     // Thailand - 1.5%
+        'MY': 180      // Malaysia - 1.5%
+      }
+    },
+    // TikTok City Demographics
+    {
+      id: 'tt-demo-city',
+      account_id: 'tt-demo-account',
+      demographic_type: 'city',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        'Ho Chi Minh City, Vietnam': 4200,   // 35%
+        'Hanoi, Vietnam': 3600,              // 30%
+        'Da Nang, Vietnam': 1200,            // 10%
+        'Can Tho, Vietnam': 600,             // 5%
+        'Hai Phong, Vietnam': 480,           // 4%
+        'Los Angeles, CA': 360,              // 3%
+        'San Francisco, CA': 240,            // 2%
+        'Sydney, AU': 240,                   // 2%
+        'Singapore, SG': 240,                // 2%
+        'New York, NY': 180                  // 1.5%
+      }
+    },
+    // TikTok Age Demographics (youngest skew)
+    {
+      id: 'tt-demo-age',
+      account_id: 'tt-demo-account',
+      demographic_type: 'age',
+      metric_date: '2025-06-30',
+      breakdown_values: {
+        '13-17_M': 1800,  // 15%
+        '13-17_F': 2040,  // 17%
+        '18-24_M': 2400,  // 20%
+        '18-24_F': 2760,  // 23%
+        '25-34_M': 960,   // 8%
+        '25-34_F': 1080,  // 9%
+        '35-44_M': 360,   // 3%
+        '35-44_F': 360,   // 3%
+        '45+_M': 120,     // 1%
+        '45+_F': 120      // 1%
+      }
+    }
+  ];
 };
 
 /**
@@ -843,6 +1033,13 @@ export const generateSocialAccounts = () => {
       platform_account_id: '111222333',
       account_name: 'Lumist Instagram',
       profile_picture: '/logo-icon.png'
+    },
+    {
+      id: 'tt-demo-account',
+      platform: 'tiktok',
+      platform_account_id: '444555666',
+      account_name: 'Lumist TikTok',
+      profile_picture: '/logo-icon.png'
     }
   ];
 };
@@ -852,22 +1049,35 @@ export const generateSocialAccounts = () => {
  */
 export const generateDailyMetricsSummary = (platform) => {
   const data = [];
-  const startDate = new Date(2024, 11, 5);
+  const startDate = platform === 'facebook' || platform === 'threads'
+    ? new Date(2024, 11, 5)
+    : new Date(2025, 0, 1);
   const endDate = new Date(2025, 5, 30);
 
   let currentDate = new Date(startDate);
   let dayIndex = 0;
 
-  const platformId = platform === 'facebook' ? '123456789' : '987654321';
+  const platformConfig = {
+    facebook: { id: '123456789', startFollowers: 2400, endFollowers: 8900 },
+    threads: { id: '987654321', startFollowers: 1200, endFollowers: 4500 },
+    instagram: { id: '111222333', startFollowers: 1200, endFollowers: 4500 },
+    tiktok: { id: '444555666', startFollowers: 500, endFollowers: 12000 }
+  };
+
+  const config = platformConfig[platform] || platformConfig.facebook;
+  const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
   while (currentDate <= endDate) {
     const dateString = formatDate(currentDate);
 
+    const dailyGrowth = (config.endFollowers - config.startFollowers) / totalDays;
+    const followers = Math.round(config.startFollowers + (dailyGrowth * dayIndex) + (seededRandom(dayIndex) * 50 - 25));
+
     data.push({
       date: dateString,
-      platform_id: platformId,
+      platform_id: config.id,
       platform: platform,
-      followers: Math.round(2400 + (dayIndex * 31) + (seededRandom(dayIndex) * 100 - 50)),
+      followers: followers,
       reach: randomInRange(3000, 12000),
       impressions: randomInRange(5000, 18000),
       engagement: randomInRange(200, 800),
@@ -951,6 +1161,319 @@ export const generateThreadsPosts = () => {
   return posts;
 };
 
+/**
+ * 28. Instagram Metrics (account_metrics_daily format)
+ * Followers: 1,200 -> 4,500 (Jan-Jun 2025)
+ */
+export const generateInstagramMetrics = () => {
+  const data = [];
+  const startDate = new Date(2025, 0, 1);  // Jan 1, 2025
+  const endDate = new Date(2025, 5, 30);
+
+  let followers = 1200;
+  let currentDate = new Date(startDate);
+  let dayIndex = 0;
+
+  while (currentDate <= endDate) {
+    const dateString = formatDate(currentDate);
+
+    // Follower growth: 1200 -> 4500 over 180 days
+    const dailyGrowth = (4500 - 1200) / 180;
+    followers = Math.round(1200 + (dailyGrowth * dayIndex) + (seededRandom(dayIndex + 700) * 40 - 20));
+
+    const reach = randomInRange(2000, 8000);
+    const engagements = randomInRange(120, 450);
+
+    data.push({
+      metric_date: dateString,
+      account_id: 'ig-demo-account',
+      followers_count: followers,
+      daily_follows: randomInRange(8, 35),
+      reach: reach,
+      impressions: Math.round(reach * 1.4),
+      engagements: engagements,
+      page_views: randomInRange(40, 150),
+      engagement_rate: ((engagements / followers) * 100).toFixed(2)
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex++;
+  }
+
+  return data;
+};
+
+/**
+ * 29. Instagram Posts (posts table format)
+ * Mix of reels (perform 3x better) and static posts
+ */
+export const generateInstagramPosts = () => {
+  const posts = [];
+  const postTypes = ['reel', 'image', 'carousel', 'reel', 'reel'];  // More reels
+  const captions = [
+    '5 SAT math shortcuts you NEED to know 🧮 #SATPrep',
+    'POV: You finally understand that grammar rule 😭✨',
+    'Study tips that actually work (thread) 📚',
+    'Real talk: How I went from 1200 to 1500+ 📈',
+    'When the SAT is in 2 weeks... 😅 #StudentLife',
+    'Your sign to start studying today! 💪',
+    'SAT vocab made easy (save for later!) 📖',
+    'Day in my life: SAT prep edition 🎯',
+  ];
+
+  for (let i = 0; i < 40; i++) {
+    const daysAgo = i * 4;
+    const date = new Date(2025, 5, 30);
+    date.setDate(date.getDate() - daysAgo);
+
+    const postType = postTypes[i % postTypes.length];
+    const isReel = postType === 'reel';
+    const baseMultiplier = isReel ? 3 : 1;  // Reels perform 3x better
+
+    posts.push({
+      id: `ig-post-${i + 1}`,
+      account_id: 'ig-demo-account',
+      platform_post_id: `ig-${Date.now() - i * 100000}`,
+      content_text: captions[i % captions.length],
+      post_type: postType,
+      media_type: postType,
+      reach: Math.round(randomInRange(2000, 6000) * baseMultiplier),
+      impressions: Math.round(randomInRange(3000, 9000) * baseMultiplier),
+      likes: Math.round(randomInRange(80, 300) * baseMultiplier),
+      comments: Math.round(randomInRange(10, 60) * baseMultiplier),
+      shares: Math.round(randomInRange(5, 40) * baseMultiplier),
+      saves: Math.round(randomInRange(20, 100) * baseMultiplier),
+      clicks: Math.round(randomInRange(30, 120) * baseMultiplier),
+      reactions_breakdown: {
+        like: Math.round(randomInRange(80, 300) * baseMultiplier),
+        love: Math.round(randomInRange(15, 60) * baseMultiplier)
+      },
+      published_at: formatDate(date) + 'T12:00:00Z',
+      permalink: `https://instagram.com/p/${i + 1}`
+    });
+  }
+
+  return posts;
+};
+
+/**
+ * 30. TikTok Metrics (account_metrics_daily format)
+ * Fastest growing: 500 -> 12,000 followers (Jan-Jun 2025)
+ */
+export const generateTikTokMetrics = () => {
+  const data = [];
+  const startDate = new Date(2025, 0, 1);
+  const endDate = new Date(2025, 5, 30);
+
+  let followers = 500;
+  let currentDate = new Date(startDate);
+  let dayIndex = 0;
+
+  while (currentDate <= endDate) {
+    const dateString = formatDate(currentDate);
+
+    // Exponential-ish growth: 500 -> 12000 over 180 days (fastest growing)
+    const growthFactor = Math.pow(24, dayIndex / 180);  // 24x growth
+    followers = Math.round(500 * growthFactor + (seededRandom(dayIndex + 900) * 100 - 50));
+    followers = Math.min(followers, 12500);
+
+    const views = randomInRange(5000, 50000);
+    const likes = Math.round(views * (0.02 + seededRandom(dayIndex) * 0.05));
+
+    data.push({
+      metric_date: dateString,
+      account_id: 'tt-demo-account',
+      followers_count: followers,
+      daily_follows: randomInRange(20, 150),
+      video_views: views,
+      likes: likes,
+      comments: Math.round(likes * 0.08),
+      shares: Math.round(likes * 0.15),
+      profile_views: randomInRange(100, 800),
+      engagement_rate: ((likes / views) * 100).toFixed(2)
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex++;
+  }
+
+  return data;
+};
+
+/**
+ * 31. TikTok Posts/Videos (posts table format)
+ * Including viral video data per user specs
+ */
+export const generateTikTokPosts = () => {
+  const posts = [];
+
+  // Top videos as specified by user
+  const topVideos = [
+    { title: 'SAT Math Hack #1', views: 250000, likes: 18500, comments: 1200, shares: 3400 },
+    { title: 'Study With Me (10 hrs)', views: 85000, likes: 6200, comments: 450, shares: 890 },
+    { title: 'SAT Vocab in 60 Seconds', views: 62000, likes: 4800, comments: 380, shares: 720 },
+    { title: 'Reading Tips That Work', views: 45000, likes: 3100, comments: 290, shares: 510 },
+    { title: 'My SAT Score Reveal', views: 38000, likes: 5200, comments: 890, shares: 340 },
+  ];
+
+  // Add top videos first
+  topVideos.forEach((video, i) => {
+    const date = new Date(2025, 5, 30);
+    date.setDate(date.getDate() - (i * 15));  // Spread over time
+
+    posts.push({
+      id: `tt-post-${i + 1}`,
+      account_id: 'tt-demo-account',
+      platform_post_id: `tt-${Date.now() - i * 100000}`,
+      content_text: `${video.title} #SATPrep #StudyTok #LearnOnTikTok`,
+      post_type: 'video',
+      media_type: 'video',
+      views: video.views,
+      reach: Math.round(video.views * 0.85),
+      likes: video.likes,
+      comments: video.comments,
+      shares: video.shares,
+      saves: Math.round(video.likes * 0.4),
+      watch_time_seconds: randomInRange(8000, 25000),
+      avg_watch_time: randomInRange(12, 35),
+      reactions_breakdown: { like: video.likes },
+      published_at: formatDate(date) + 'T16:00:00Z',
+      permalink: `https://tiktok.com/@lumist/video/${i + 1}`,
+      is_viral: video.views > 100000
+    });
+  });
+
+  // Add regular videos
+  const regularCaptions = [
+    'Quick tip: Read the question twice before answering 📝',
+    'That feeling when you ace a practice test 🎉',
+    'Grammar rules simplified (Part 1) ✏️',
+    'Math formulas you MUST memorize 🧠',
+    'How to stay focused while studying 🎯',
+    'SAT reading strategy that changed everything 📖',
+    'Answering your SAT questions! Q&A 💬',
+    'My study setup tour 🖥️',
+  ];
+
+  for (let i = 5; i < 35; i++) {
+    const daysAgo = (i - 5) * 5 + 3;
+    const date = new Date(2025, 5, 30);
+    date.setDate(date.getDate() - daysAgo);
+
+    const views = randomInRange(3000, 25000);
+    const likes = Math.round(views * (0.04 + seededRandom(i) * 0.08));
+
+    posts.push({
+      id: `tt-post-${i + 1}`,
+      account_id: 'tt-demo-account',
+      platform_post_id: `tt-${Date.now() - i * 100000}`,
+      content_text: `${regularCaptions[(i - 5) % regularCaptions.length]} #SATPrep #StudyTok`,
+      post_type: 'video',
+      media_type: 'video',
+      views: views,
+      reach: Math.round(views * 0.85),
+      likes: likes,
+      comments: Math.round(likes * 0.06),
+      shares: Math.round(likes * 0.12),
+      saves: Math.round(likes * 0.25),
+      watch_time_seconds: randomInRange(2000, 8000),
+      avg_watch_time: randomInRange(8, 20),
+      reactions_breakdown: { like: likes },
+      published_at: formatDate(date) + 'T17:00:00Z',
+      permalink: `https://tiktok.com/@lumist/video/${i + 1}`,
+      is_viral: false
+    });
+  }
+
+  return posts;
+};
+
+/**
+ * 32. Discord Server Stats (discord_latest_stats view)
+ */
+export const generateDiscordLatestStats = () => {
+  return {
+    total_members: 850,
+    online_members: 145,
+    member_role_count: 680,  // Onboarded
+    verified_count: 520,
+    premium_count: 45,
+    server_boost_level: 2,
+    server_boost_count: 12,
+    created_at: '2024-09-15T00:00:00Z'
+  };
+};
+
+/**
+ * 33. Discord Member Growth (discord_member_growth view)
+ */
+export const generateDiscordMemberGrowth = () => {
+  const data = [];
+  const startDate = new Date(2024, 8, 15);  // Sep 15, 2024
+  const endDate = new Date(2025, 5, 30);
+
+  let members = 50;  // Started with 50
+  let currentDate = new Date(startDate);
+  let dayIndex = 0;
+
+  while (currentDate <= endDate) {
+    const dateString = formatDate(currentDate);
+
+    // Growth: 50 -> 850 over ~9 months
+    const dailyGrowth = (850 - 50) / 290;
+    members = Math.round(50 + (dailyGrowth * dayIndex) + (seededRandom(dayIndex + 1100) * 10 - 5));
+    members = Math.min(members, 870);
+
+    data.push({
+      date: dateString,
+      total_members: members
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex++;
+  }
+
+  return data;
+};
+
+/**
+ * 34. Discord Daily Summary (discord_daily_summary view)
+ */
+export const generateDiscordDailySummary = () => {
+  const data = [];
+  const startDate = new Date(2024, 8, 15);
+  const endDate = new Date(2025, 5, 30);
+
+  let currentDate = new Date(startDate);
+  let dayIndex = 0;
+
+  while (currentDate <= endDate) {
+    const dateString = formatDate(currentDate);
+    const dayOfWeek = getDayOfWeek(dateString);
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    // Messages per day: 200-400 weekday, 100-250 weekend
+    const messages = isWeekend ? randomInRange(100, 250) : randomInRange(200, 400);
+
+    // Active members: 120-180 weekday, 80-130 weekend
+    const activeMembers = isWeekend ? randomInRange(80, 130) : randomInRange(120, 180);
+
+    data.push({
+      date: dateString,
+      messages: messages,
+      active_members: activeMembers,
+      joins: randomInRange(1, 8),
+      leaves: randomInRange(0, 3),
+      voice_minutes: randomInRange(200, 1200)
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex++;
+  }
+
+  return data;
+};
+
 // Export all generators
 export default {
   generateDAU,
@@ -980,4 +1503,11 @@ export default {
   generateExchangeRates,
   generateSocialAccounts,
   generateDailyMetricsSummary,
+  generateInstagramMetrics,
+  generateInstagramPosts,
+  generateTikTokMetrics,
+  generateTikTokPosts,
+  generateDiscordLatestStats,
+  generateDiscordMemberGrowth,
+  generateDiscordDailySummary,
 };
