@@ -388,6 +388,8 @@ const createMockSupabaseClient = (schemaName = 'public_analytics') => {
       })
     }
   };
+
+  return client;
 };
 
 // Export mock clients matching the original supabase.js structure
