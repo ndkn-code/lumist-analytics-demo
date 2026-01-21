@@ -302,14 +302,16 @@ export const generateSATCycleEngagement = () => {
 /**
  * 9. Acquisition Funnel - Monthly Conversion Stats
  * Field names match what AcquisitionOverview expects
+ * Total signups: 1640 (200 + 250 + 350 + 320 + 300 + 220)
+ * Active users: 1500 (from retention_summary)
  */
 export const generateMonthlyConversionStats = () => {
   return [
-    { signup_month: '2025-01', total_signups: 180, total_conversions: 5, conversion_rate: 2.8, avg_days_to_convert: 18.2 },
-    { signup_month: '2025-02', total_signups: 220, total_conversions: 7, conversion_rate: 3.2, avg_days_to_convert: 15.4 },
-    { signup_month: '2025-03', total_signups: 310, total_conversions: 12, conversion_rate: 3.9, avg_days_to_convert: 11.8 },
-    { signup_month: '2025-04', total_signups: 280, total_conversions: 10, conversion_rate: 3.6, avg_days_to_convert: 13.1 },
-    { signup_month: '2025-05', total_signups: 290, total_conversions: 11, conversion_rate: 3.8, avg_days_to_convert: 10.5 },
+    { signup_month: '2025-01', total_signups: 200, total_conversions: 5, conversion_rate: 2.5, avg_days_to_convert: 18.2 },
+    { signup_month: '2025-02', total_signups: 250, total_conversions: 8, conversion_rate: 3.2, avg_days_to_convert: 15.4 },
+    { signup_month: '2025-03', total_signups: 350, total_conversions: 14, conversion_rate: 4.0, avg_days_to_convert: 11.8 },
+    { signup_month: '2025-04', total_signups: 320, total_conversions: 11, conversion_rate: 3.4, avg_days_to_convert: 13.1 },
+    { signup_month: '2025-05', total_signups: 300, total_conversions: 11, conversion_rate: 3.7, avg_days_to_convert: 10.5 },
     { signup_month: '2025-06', total_signups: 220, total_conversions: 7, conversion_rate: 3.2, avg_days_to_convert: 9.2 },
   ];
 };
@@ -317,40 +319,43 @@ export const generateMonthlyConversionStats = () => {
 /**
  * 10. Referral Source Performance
  * Field names match what AcquisitionOverview expects (total_users, converted_users, etc.)
+ * Total: 1640 signups (560 + 480 + 290 + 195 + 115)
  */
 export const generateReferralSourcePerformance = () => {
   return [
-    { referral_source: 'TikTok', total_users: 525, converted_users: 27, conversion_rate: 5.2 },
-    { referral_source: 'Facebook', total_users: 420, converted_users: 13, conversion_rate: 3.1 },
-    { referral_source: 'Google', total_users: 270, converted_users: 8, conversion_rate: 2.8 },
-    { referral_source: 'Word of Mouth', total_users: 180, converted_users: 11, conversion_rate: 6.1 },
-    { referral_source: 'Instagram', total_users: 105, converted_users: 2, conversion_rate: 2.2 },
+    { referral_source: 'TikTok', total_users: 560, converted_users: 29, conversion_rate: 5.2 },
+    { referral_source: 'Facebook', total_users: 480, converted_users: 15, conversion_rate: 3.1 },
+    { referral_source: 'Google', total_users: 290, converted_users: 8, conversion_rate: 2.8 },
+    { referral_source: 'Word of Mouth', total_users: 195, converted_users: 12, conversion_rate: 6.1 },
+    { referral_source: 'Instagram', total_users: 115, converted_users: 3, conversion_rate: 2.6 },
   ];
 };
 
 /**
  * 11. Geography Conversion Stats
  * Field names match what AcquisitionOverview expects (geography, converted_users, etc.)
+ * Total signups: 1640 (1510 + 130)
  */
 export const generateGeographyStats = () => {
   return [
-    { geography: 'Vietnam', total_users: 1380, converted_users: 48, conversion_rate: 3.8, total_revenue_usd: 4320 },
-    { geography: 'Global', total_users: 120, converted_users: 4, conversion_rate: 2.1, total_revenue_usd: 360 },
-    { geography: 'Not Converted', total_users: 1448, converted_users: 0, conversion_rate: 0, total_revenue_usd: 0 },
+    { geography: 'Vietnam', total_users: 1510, converted_users: 52, conversion_rate: 3.4, total_revenue_usd: 4680 },
+    { geography: 'Global', total_users: 130, converted_users: 4, conversion_rate: 3.1, total_revenue_usd: 596 },
+    { geography: 'Not Converted', total_users: 1584, converted_users: 0, conversion_rate: 0, total_revenue_usd: 0 },
   ];
 };
 
 /**
  * 12. Signup Cohort Conversion
  * Field names match what AcquisitionCohorts expects
+ * Total signups: 1640 (200 + 250 + 350 + 320 + 300 + 220)
  */
 export const generateSignupCohortConversion = () => {
   return [
-    { cohort: '2025-01', cohort_size: 180, total_converted: 5, conversion_rate: 2.8, converted_day_0: 1, converted_within_7d: 2, converted_within_30d: 3, converted_after_30d: 4, avg_days_to_convert: 18.2, vietnam_conversions: 4, global_conversions: 1 },
-    { cohort: '2025-02', cohort_size: 220, total_converted: 7, conversion_rate: 3.2, converted_day_0: 1, converted_within_7d: 3, converted_within_30d: 5, converted_after_30d: 6, avg_days_to_convert: 15.4, vietnam_conversions: 6, global_conversions: 1 },
-    { cohort: '2025-03', cohort_size: 310, total_converted: 12, conversion_rate: 3.9, converted_day_0: 2, converted_within_7d: 5, converted_within_30d: 9, converted_after_30d: 10, avg_days_to_convert: 11.8, vietnam_conversions: 10, global_conversions: 2 },
-    { cohort: '2025-04', cohort_size: 280, total_converted: 10, conversion_rate: 3.6, converted_day_0: 2, converted_within_7d: 4, converted_within_30d: 7, converted_after_30d: 9, avg_days_to_convert: 13.1, vietnam_conversions: 8, global_conversions: 2 },
-    { cohort: '2025-05', cohort_size: 290, total_converted: 11, conversion_rate: 3.8, converted_day_0: 2, converted_within_7d: 5, converted_within_30d: 8, converted_after_30d: 10, avg_days_to_convert: 10.5, vietnam_conversions: 9, global_conversions: 2 },
+    { cohort: '2025-01', cohort_size: 200, total_converted: 5, conversion_rate: 2.5, converted_day_0: 1, converted_within_7d: 2, converted_within_30d: 3, converted_after_30d: 4, avg_days_to_convert: 18.2, vietnam_conversions: 4, global_conversions: 1 },
+    { cohort: '2025-02', cohort_size: 250, total_converted: 8, conversion_rate: 3.2, converted_day_0: 1, converted_within_7d: 3, converted_within_30d: 5, converted_after_30d: 7, avg_days_to_convert: 15.4, vietnam_conversions: 7, global_conversions: 1 },
+    { cohort: '2025-03', cohort_size: 350, total_converted: 14, conversion_rate: 4.0, converted_day_0: 2, converted_within_7d: 6, converted_within_30d: 10, converted_after_30d: 12, avg_days_to_convert: 11.8, vietnam_conversions: 12, global_conversions: 2 },
+    { cohort: '2025-04', cohort_size: 320, total_converted: 11, conversion_rate: 3.4, converted_day_0: 2, converted_within_7d: 5, converted_within_30d: 8, converted_after_30d: 10, avg_days_to_convert: 13.1, vietnam_conversions: 9, global_conversions: 2 },
+    { cohort: '2025-05', cohort_size: 300, total_converted: 11, conversion_rate: 3.7, converted_day_0: 2, converted_within_7d: 5, converted_within_30d: 8, converted_after_30d: 10, avg_days_to_convert: 10.5, vietnam_conversions: 9, global_conversions: 2 },
     { cohort: '2025-06', cohort_size: 220, total_converted: 7, conversion_rate: 3.2, converted_day_0: 1, converted_within_7d: 3, converted_within_30d: 5, converted_after_30d: 6, avg_days_to_convert: 9.2, vietnam_conversions: 6, global_conversions: 1 },
   ];
 };
@@ -398,36 +403,80 @@ export const generateChurnSummary = () => {
 };
 
 /**
- * 16. User Subscriptions
+ * 16. User Subscriptions (matches user_subscriptions view format for RevenueSubscriptions)
+ * Fields needed: user_id, first_name, last_name, email, account_created_at,
+ * subscription_plan, payment_provider, subscription_start, subscription_end,
+ * days_remaining, status
  */
 export const generateUserSubscriptions = () => {
-  const plans = [
-    { name: 'Basic', price: 49 },
-    { name: 'Premium', price: 99 },
-    { name: 'Family', price: 149 },
-  ];
+  const plans = ['1month', '3months', '6months'];
+  const providers = ['stripe', 'vnpay', 'zalopay'];
 
-  const statuses = ['active', 'active', 'active', 'active', 'expiring_soon', 'at_risk', 'expired'];
-  const firstNames = ['Sarah', 'Michael', 'Emily', 'David', 'Jessica', 'James', 'Lisa', 'Robert', 'Jennifer', 'William'];
-  const lastNames = ['Chen', 'Tran', 'Nguyen', 'Lee', 'Wang', 'Kim', 'Park', 'Liu', 'Zhang', 'Huang'];
+  // Vietnamese names for subscribers
+  const firstNames = ['Minh', 'Linh', 'Duc', 'Anh', 'Hoa', 'Khoa', 'Mai', 'Tuan', 'Thao', 'Nam',
+                      'Lan', 'Hung', 'Chi', 'Long', 'Vy', 'Quang', 'Nhung', 'Duy', 'Thu', 'Hieu',
+                      'My', 'Khanh', 'An', 'Trung', 'Ngoc', 'Phong', 'Tam', 'Hanh', 'Son', 'Uyen',
+                      'Bao', 'Trang', 'Vinh', 'Nhi', 'Dat', 'Yen', 'Hoang', 'Phuong', 'Thanh', 'Huong',
+                      'Tien', 'Ha', 'Cuong', 'Hong', 'Binh', 'Quynh', 'Huy', 'Nghi', 'Sang', 'Trinh'];
+  const lastNames = ['Nguyen', 'Tran', 'Le', 'Pham', 'Hoang', 'Vu', 'Vo', 'Dang', 'Bui', 'Do',
+                     'Ho', 'Ngo', 'Duong', 'Ly', 'Truong'];
 
   const subscriptions = [];
-  for (let i = 0; i < 30; i++) {
-    const plan = plans[i < 12 ? 0 : i < 25 ? 1 : 2];
-    const status = statuses[Math.floor(seededRandom(i) * statuses.length)];
-    const startMonth = Math.floor(seededRandom(i + 100) * 5) + 1;
+  const today = new Date(2025, 5, 30); // June 30, 2025
+
+  for (let i = 0; i < 52; i++) {
+    // Subscription plan and duration
+    const planIndex = i < 20 ? 0 : i < 40 ? 1 : 2;
+    const plan = plans[planIndex];
+    const durationDays = plan === '1month' ? 30 : plan === '3months' ? 90 : 180;
+
+    // Provider based on index
+    const providerIndex = Math.floor(seededRandom(i + 50) * 3);
+    const provider = providers[providerIndex];
+
+    // Account creation date (sometime in Jan-May 2025)
+    const accountMonth = Math.floor(seededRandom(i + 100) * 5) + 1;
+    const accountDay = Math.floor(seededRandom(i + 150) * 25) + 1;
+    const accountCreated = `2025-0${accountMonth}-${String(accountDay).padStart(2, '0')}`;
+
+    // Subscription start (after account creation)
+    const daysAfterSignup = Math.floor(seededRandom(i + 200) * 14) + 1;
+    const startDate = new Date(2025, accountMonth - 1, accountDay + daysAfterSignup);
+    const subscriptionStart = formatDate(startDate);
+
+    // Subscription end
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + durationDays);
+    const subscriptionEnd = formatDate(endDate);
+
+    // Calculate days remaining
+    const daysRemaining = Math.floor((endDate - today) / (1000 * 60 * 60 * 24));
+
+    // Status based on days remaining
+    let status;
+    if (daysRemaining < 0) {
+      status = 'expired';
+    } else {
+      status = 'active';
+    }
+
+    // Name
+    const firstName = firstNames[i % firstNames.length];
+    const lastName = lastNames[Math.floor(seededRandom(i + 300) * lastNames.length)];
+    const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i + 1}@gmail.com`;
 
     subscriptions.push({
-      id: `sub-${i + 1}`,
       user_id: `user-${i + 1}`,
-      user_name: `${firstNames[i % 10]} ${lastNames[Math.floor(i / 10) % 10]}`,
-      email: `user${i + 1}@example.com`,
-      plan_name: plan.name,
-      plan_price: plan.price,
-      status: status,
-      start_date: `2025-0${startMonth}-01`,
-      end_date: status === 'expired' ? `2025-0${startMonth + 1}-01` : null,
-      last_active: `2025-06-${String(Math.floor(seededRandom(i + 200) * 20) + 1).padStart(2, '0')}`
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      account_created_at: accountCreated,
+      subscription_plan: plan,
+      payment_provider: provider,
+      subscription_start: subscriptionStart,
+      subscription_end: subscriptionEnd,
+      days_remaining: Math.max(0, daysRemaining),
+      status: status
     });
   }
 
@@ -1502,6 +1551,91 @@ export const generateDiscordDailySummary = () => {
   return data;
 };
 
+/**
+ * 35. Discord Channel Leaderboard (discord_channel_leaderboard)
+ * For Discord Engagement tab
+ */
+export const generateDiscordChannelLeaderboard = () => {
+  return [
+    { channel_name: 'general-chat', total_messages: 4250 },
+    { channel_name: 'sat-help', total_messages: 3180 },
+    { channel_name: 'study-together', total_messages: 2450 },
+    { channel_name: 'math-questions', total_messages: 1920 },
+    { channel_name: 'reading-writing', total_messages: 1680 },
+    { channel_name: 'tips-and-tricks', total_messages: 1350 },
+    { channel_name: 'motivation', total_messages: 1120 },
+    { channel_name: 'resources', total_messages: 890 },
+    { channel_name: 'off-topic', total_messages: 720 },
+    { channel_name: 'introductions', total_messages: 540 }
+  ];
+};
+
+/**
+ * 36. Discord Hourly Activity (discord_hourly_activity)
+ * For Discord Engagement tab - message count by hour
+ */
+export const generateDiscordHourlyActivity = () => {
+  // Peak hours: 19:00-23:00 (after school), low hours: 2:00-8:00
+  const hourlyPattern = [
+    45, 30, 18, 12, 8, 10, 25, 55,     // 0:00-7:00 (night/early morning)
+    85, 120, 95, 88, 110, 125, 140, 180, // 8:00-15:00 (school hours)
+    220, 285, 340, 380, 350, 290, 180, 95  // 16:00-23:00 (after school peak)
+  ];
+
+  return hourlyPattern.map((count, hour) => ({
+    hour: hour,
+    message_count: count + Math.floor(seededRandom(hour) * 30 - 15)
+  }));
+};
+
+/**
+ * 37. Discord Nationality Distribution (discord_latest_nationality)
+ * For Discord Audience tab
+ */
+export const generateDiscordLatestNationality = () => {
+  return [
+    { nationality: 'Vietnam', member_count: 680 },
+    { nationality: 'United States', member_count: 45 },
+    { nationality: 'Australia', member_count: 28 },
+    { nationality: 'Canada', member_count: 22 },
+    { nationality: 'Singapore', member_count: 18 },
+    { nationality: 'United Kingdom', member_count: 15 },
+    { nationality: 'Japan', member_count: 12 },
+    { nationality: 'South Korea', member_count: 10 },
+    { nationality: 'Malaysia', member_count: 8 },
+    { nationality: 'Thailand', member_count: 6 },
+    { nationality: 'Indonesia', member_count: 4 },
+    { nationality: 'Other', member_count: 2 }
+  ];
+};
+
+/**
+ * 38. Discord Grade Distribution (discord_latest_grade)
+ * For Discord Audience tab
+ */
+export const generateDiscordLatestGrade = () => {
+  return [
+    { grade: '9', member_count: 85 },
+    { grade: '10', member_count: 180 },
+    { grade: '11', member_count: 320 },
+    { grade: '12', member_count: 215 },
+    { grade: 'Alumni', member_count: 50 }
+  ];
+};
+
+/**
+ * 39. Discord Funnel Stats (discord_funnel_stats)
+ * For Discord Funnel tab
+ */
+export const generateDiscordFunnelStats = () => {
+  return {
+    total_joined: 850,
+    completed_onboarding: 680,
+    verified: 520,
+    premium: 45
+  };
+};
+
 // Export all generators
 export default {
   generateDAU,
@@ -1538,4 +1672,9 @@ export default {
   generateDiscordLatestStats,
   generateDiscordMemberGrowth,
   generateDiscordDailySummary,
+  generateDiscordChannelLeaderboard,
+  generateDiscordHourlyActivity,
+  generateDiscordLatestNationality,
+  generateDiscordLatestGrade,
+  generateDiscordFunnelStats,
 };

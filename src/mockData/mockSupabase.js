@@ -40,6 +40,11 @@ import {
   generateDiscordLatestStats,
   generateDiscordMemberGrowth,
   generateDiscordDailySummary,
+  generateDiscordChannelLeaderboard,
+  generateDiscordHourlyActivity,
+  generateDiscordLatestNationality,
+  generateDiscordLatestGrade,
+  generateDiscordFunnelStats,
 } from './generators';
 
 // Cache generated data for consistency across queries
@@ -275,6 +280,11 @@ const tableDataMap = {
   'discord_latest_stats': () => [getOrGenerateData('discord_stats', generateDiscordLatestStats)],
   'discord_member_growth': () => getOrGenerateData('discord_growth', generateDiscordMemberGrowth),
   'discord_daily_summary': () => getOrGenerateData('discord_summary', generateDiscordDailySummary),
+  'discord_channel_leaderboard': () => getOrGenerateData('discord_channels', generateDiscordChannelLeaderboard),
+  'discord_hourly_activity': () => getOrGenerateData('discord_hourly', generateDiscordHourlyActivity),
+  'discord_latest_nationality': () => getOrGenerateData('discord_nationality', generateDiscordLatestNationality),
+  'discord_latest_grade': () => getOrGenerateData('discord_grade', generateDiscordLatestGrade),
+  'discord_funnel_stats': () => [getOrGenerateData('discord_funnel', generateDiscordFunnelStats)],
 
   // Identity schema (for admin - read-only in demo)
   'user_profiles': () => generateUserSubscriptions().map((s, i) => ({
