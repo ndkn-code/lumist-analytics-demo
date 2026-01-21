@@ -141,15 +141,16 @@ export const generateMAU = () => {
 /**
  * 3. Retention Cohorts Generator
  * Monthly cohorts with week-over-week retention
+ * Returns data matching monthly_cohort_retention view format
  */
 export const generateRetentionCohorts = () => {
   const cohorts = [
-    { cohort_date: '2025-01-01', cohort_size: 180, retention: [100, 45, 32, 25, 20, 17, 15] },
-    { cohort_date: '2025-02-01', cohort_size: 220, retention: [100, 48, 35, 27, 22, 18, 16] },
-    { cohort_date: '2025-03-01', cohort_size: 310, retention: [100, 52, 38, 30, 24, 20, 17] },
-    { cohort_date: '2025-04-01', cohort_size: 280, retention: [100, 50, 36, 28, 23, 19, 16] },
-    { cohort_date: '2025-05-01', cohort_size: 290, retention: [100, 55, 40, 32, 26, 22, 19] },
-    { cohort_date: '2025-06-01', cohort_size: 220, retention: [100, 53, 38, null, null, null, null] },
+    { cohort_month: '2025-01', cohort_size: 180, retention: [100, 45, 32, 25, 20, 17, 15] },
+    { cohort_month: '2025-02', cohort_size: 220, retention: [100, 48, 35, 27, 22, 18, 16] },
+    { cohort_month: '2025-03', cohort_size: 310, retention: [100, 52, 38, 30, 24, 20, 17] },
+    { cohort_month: '2025-04', cohort_size: 280, retention: [100, 50, 36, 28, 23, 19, 16] },
+    { cohort_month: '2025-05', cohort_size: 290, retention: [100, 55, 40, 32, 26, 22, 19] },
+    { cohort_month: '2025-06', cohort_size: 220, retention: [100, 53, 38, null, null, null, null] },
   ];
 
   // Flatten to monthly_cohort_retention format
@@ -158,10 +159,10 @@ export const generateRetentionCohorts = () => {
     cohort.retention.forEach((rate, weekIndex) => {
       if (rate !== null) {
         data.push({
-          cohort_date: cohort.cohort_date,
+          cohort_month: cohort.cohort_month,  // YYYY-MM format expected by RetentionHeatmap
           cohort_size: cohort.cohort_size,
           week_number: weekIndex,
-          retention_rate: rate / 100,
+          retention_rate: rate,  // Percentage (e.g., 45 for 45%), not decimal
           retained_users: Math.round(cohort.cohort_size * rate / 100)
         });
       }
@@ -173,13 +174,18 @@ export const generateRetentionCohorts = () => {
 
 /**
  * 4. Retention Summary (D1/D7/D30)
+ * Returns data matching retention_summary view format
+ * Note: retention values are percentages (e.g., 42.0 for 42%), not decimals
  */
 export const generateRetentionSummary = () => {
   return {
     total_users: 1500,
-    d1_retention: 0.42,
-    d7_retention: 0.28,
-    d30_retention: 0.16,
+    d1_retention: 42.0,          // Percentage format
+    d1_eligible_users: 1420,     // Users eligible for D1 measurement
+    d7_retention: 28.0,          // Percentage format
+    d7_eligible_users: 1280,     // Users eligible for D7 measurement
+    d30_retention: 16.0,         // Percentage format
+    d30_eligible_users: 980,     // Users eligible for D30 measurement
     avg_sessions_per_user: 4.2
   };
 };
