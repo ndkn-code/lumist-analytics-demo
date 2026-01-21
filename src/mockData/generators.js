@@ -301,65 +301,71 @@ export const generateSATCycleEngagement = () => {
 
 /**
  * 9. Acquisition Funnel - Monthly Conversion Stats
+ * Field names match what AcquisitionOverview expects
  */
 export const generateMonthlyConversionStats = () => {
   return [
-    { month: '2025-01', signups: 180, activated: 145, conversions: 5, conversion_rate: 0.028, avg_days_to_convert: 12 },
-    { month: '2025-02', signups: 220, activated: 182, conversions: 7, conversion_rate: 0.032, avg_days_to_convert: 10 },
-    { month: '2025-03', signups: 310, activated: 265, conversions: 12, conversion_rate: 0.039, avg_days_to_convert: 8 },
-    { month: '2025-04', signups: 280, activated: 238, conversions: 10, conversion_rate: 0.036, avg_days_to_convert: 9 },
-    { month: '2025-05', signups: 290, activated: 255, conversions: 11, conversion_rate: 0.038, avg_days_to_convert: 7 },
-    { month: '2025-06', signups: 220, activated: 189, conversions: 7, conversion_rate: 0.032, avg_days_to_convert: 11 },
+    { signup_month: '2025-01', total_signups: 180, total_conversions: 5, conversion_rate: 2.8, avg_days_to_convert: 18.2 },
+    { signup_month: '2025-02', total_signups: 220, total_conversions: 7, conversion_rate: 3.2, avg_days_to_convert: 15.4 },
+    { signup_month: '2025-03', total_signups: 310, total_conversions: 12, conversion_rate: 3.9, avg_days_to_convert: 11.8 },
+    { signup_month: '2025-04', total_signups: 280, total_conversions: 10, conversion_rate: 3.6, avg_days_to_convert: 13.1 },
+    { signup_month: '2025-05', total_signups: 290, total_conversions: 11, conversion_rate: 3.8, avg_days_to_convert: 10.5 },
+    { signup_month: '2025-06', total_signups: 220, total_conversions: 7, conversion_rate: 3.2, avg_days_to_convert: 9.2 },
   ];
 };
 
 /**
  * 10. Referral Source Performance
+ * Field names match what AcquisitionOverview expects (total_users, converted_users, etc.)
  */
 export const generateReferralSourcePerformance = () => {
   return [
-    { source: 'TikTok', signups: 525, conversions: 27, conversion_rate: 0.052, revenue: 2430, color: '#ff0050' },
-    { source: 'Facebook', signups: 420, conversions: 13, conversion_rate: 0.031, revenue: 1170, color: '#1877F2' },
-    { source: 'Google', signups: 270, conversions: 8, conversion_rate: 0.028, revenue: 720, color: '#4285F4' },
-    { source: 'Word of Mouth', signups: 180, conversions: 11, conversion_rate: 0.061, revenue: 990, color: '#10B981' },
-    { source: 'Instagram', signups: 105, conversions: 2, conversion_rate: 0.022, revenue: 180, color: '#E4405F' },
+    { referral_source: 'TikTok', total_users: 525, converted_users: 27, conversion_rate: 5.2 },
+    { referral_source: 'Facebook', total_users: 420, converted_users: 13, conversion_rate: 3.1 },
+    { referral_source: 'Google', total_users: 270, converted_users: 8, conversion_rate: 2.8 },
+    { referral_source: 'Word of Mouth', total_users: 180, converted_users: 11, conversion_rate: 6.1 },
+    { referral_source: 'Instagram', total_users: 105, converted_users: 2, conversion_rate: 2.2 },
   ];
 };
 
 /**
  * 11. Geography Conversion Stats
+ * Field names match what AcquisitionOverview expects (geography, converted_users, etc.)
  */
 export const generateGeographyStats = () => {
   return [
-    { region: 'Vietnam', signups: 1200, conversions: 48, conversion_rate: 0.04, revenue: 4320 },
-    { region: 'Global', signups: 300, conversions: 4, conversion_rate: 0.013, revenue: 360 },
+    { geography: 'Vietnam', total_users: 1380, converted_users: 48, conversion_rate: 3.8, total_revenue_usd: 4320 },
+    { geography: 'Global', total_users: 120, converted_users: 4, conversion_rate: 2.1, total_revenue_usd: 360 },
+    { geography: 'Not Converted', total_users: 1448, converted_users: 0, conversion_rate: 0, total_revenue_usd: 0 },
   ];
 };
 
 /**
  * 12. Signup Cohort Conversion
+ * Field names match what AcquisitionCohorts expects
  */
 export const generateSignupCohortConversion = () => {
   return [
-    { cohort_month: '2025-01', cohort_size: 180, day_0: 1, within_7d: 2, within_30d: 4, after_30d: 5, total_conversions: 5 },
-    { cohort_month: '2025-02', cohort_size: 220, day_0: 1, within_7d: 3, within_30d: 5, after_30d: 7, total_conversions: 7 },
-    { cohort_month: '2025-03', cohort_size: 310, day_0: 2, within_7d: 5, within_30d: 9, after_30d: 12, total_conversions: 12 },
-    { cohort_month: '2025-04', cohort_size: 280, day_0: 2, within_7d: 4, within_30d: 7, after_30d: 10, total_conversions: 10 },
-    { cohort_month: '2025-05', cohort_size: 290, day_0: 2, within_7d: 5, within_30d: 8, after_30d: 11, total_conversions: 11 },
-    { cohort_month: '2025-06', cohort_size: 220, day_0: 1, within_7d: 3, within_30d: 5, after_30d: 7, total_conversions: 7 },
+    { cohort: '2025-01', cohort_size: 180, total_converted: 5, conversion_rate: 2.8, converted_day_0: 1, converted_within_7d: 2, converted_within_30d: 3, converted_after_30d: 4, avg_days_to_convert: 18.2, vietnam_conversions: 4, global_conversions: 1 },
+    { cohort: '2025-02', cohort_size: 220, total_converted: 7, conversion_rate: 3.2, converted_day_0: 1, converted_within_7d: 3, converted_within_30d: 5, converted_after_30d: 6, avg_days_to_convert: 15.4, vietnam_conversions: 6, global_conversions: 1 },
+    { cohort: '2025-03', cohort_size: 310, total_converted: 12, conversion_rate: 3.9, converted_day_0: 2, converted_within_7d: 5, converted_within_30d: 9, converted_after_30d: 10, avg_days_to_convert: 11.8, vietnam_conversions: 10, global_conversions: 2 },
+    { cohort: '2025-04', cohort_size: 280, total_converted: 10, conversion_rate: 3.6, converted_day_0: 2, converted_within_7d: 4, converted_within_30d: 7, converted_after_30d: 9, avg_days_to_convert: 13.1, vietnam_conversions: 8, global_conversions: 2 },
+    { cohort: '2025-05', cohort_size: 290, total_converted: 11, conversion_rate: 3.8, converted_day_0: 2, converted_within_7d: 5, converted_within_30d: 8, converted_after_30d: 10, avg_days_to_convert: 10.5, vietnam_conversions: 9, global_conversions: 2 },
+    { cohort: '2025-06', cohort_size: 220, total_converted: 7, conversion_rate: 3.2, converted_day_0: 1, converted_within_7d: 3, converted_within_30d: 5, converted_after_30d: 6, avg_days_to_convert: 9.2, vietnam_conversions: 6, global_conversions: 1 },
   ];
 };
 
 /**
  * 13. Top Referrers Leaderboard
+ * Field names match what AcquisitionCohorts expects (referral_code_performance view)
  */
 export const generateTopReferrers = () => {
   return [
-    { referrer_name: 'Sarah Chen', referral_code: 'SARAH25', referred_users: 28, conversions: 8, revenue: 720 },
-    { referrer_name: 'Michael Tran', referral_code: 'MIKE99', referred_users: 22, conversions: 6, revenue: 540 },
-    { referrer_name: 'Emily Nguyen', referral_code: 'EMILY2025', referred_users: 19, conversions: 5, revenue: 450 },
-    { referrer_name: 'David Lee', referral_code: 'DAVID', referred_users: 15, conversions: 4, revenue: 360 },
-    { referrer_name: 'Jessica Wang', referral_code: 'JESSICA', referred_users: 12, conversions: 3, revenue: 270 },
+    { referrer_id: 'ref-1', referrer_name: 'Sarah Chen', referrer_email: 'sarah.chen@email.com', referral_code: 'SARAH25', total_referrals: 45, converted_referrals: 8, conversion_rate: 17.8, total_revenue_usd: 720 },
+    { referrer_id: 'ref-2', referrer_name: 'Michael Tran', referrer_email: 'michael.tran@email.com', referral_code: 'MIKE99', total_referrals: 38, converted_referrals: 6, conversion_rate: 15.8, total_revenue_usd: 540 },
+    { referrer_id: 'ref-3', referrer_name: 'Emily Nguyen', referrer_email: 'emily.nguyen@email.com', referral_code: 'EMILY2025', total_referrals: 32, converted_referrals: 5, conversion_rate: 15.6, total_revenue_usd: 450 },
+    { referrer_id: 'ref-4', referrer_name: 'David Lee', referrer_email: 'david.lee@email.com', referral_code: 'DAVID', total_referrals: 28, converted_referrals: 4, conversion_rate: 14.3, total_revenue_usd: 360 },
+    { referrer_id: 'ref-5', referrer_name: 'Jessica Wang', referrer_email: 'jessica.wang@email.com', referral_code: 'JESSICA', total_referrals: 24, converted_referrals: 3, conversion_rate: 12.5, total_revenue_usd: 270 },
   ];
 };
 
@@ -430,10 +436,22 @@ export const generateUserSubscriptions = () => {
 
 /**
  * 17. Transactions (unified_transactions view format)
+ * With proper Vietnamese customer names and transaction IDs
  */
 export const generateTransactions = () => {
   const providers = ['stripe', 'vnpay', 'zalopay'];
   const plans = ['1month', '3months', '6months', 'lifetime'];
+
+  // Vietnamese-style customer names
+  const customerNames = [
+    'Minh Hoang', 'Linh Tran', 'Duc Pham', 'Anh Le', 'Hoa Nguyen',
+    'Khoa Vo', 'Mai Ly', 'Tuan Dinh', 'Thao Bui', 'Nam Do',
+    'Lan Dang', 'Hung Trinh', 'Chi Ha', 'Long Hoang', 'Vy Lam',
+    'Quang Phan', 'Nhung Truong', 'Duy Ngo', 'Thu Duong', 'Hieu Vu',
+    'My Le', 'Khanh Tran', 'An Nguyen', 'Trung Pham', 'Ngoc Do',
+    'Phong Bui', 'Tam Vo', 'Hanh Ly', 'Son Dinh', 'Uyen Dang'
+  ];
+
   const transactions = [];
 
   for (let i = 0; i < 60; i++) {
@@ -446,16 +464,32 @@ export const generateTransactions = () => {
     const plan = plans[Math.floor(seededRandom(i + 25) * plans.length)];
     const baseAmount = plan === '1month' ? 49 : plan === '3months' ? 99 : plan === '6months' ? 149 : 299;
 
+    // Generate realistic transaction ID based on provider
+    let transactionId;
+    if (provider === 'stripe') {
+      transactionId = `pi_${Date.now().toString(36)}${i.toString(36).padStart(4, '0')}`;
+    } else if (provider === 'vnpay') {
+      transactionId = `VNP${formatDate(date).replace(/-/g, '')}${String(i + 1000).padStart(6, '0')}`;
+    } else {
+      transactionId = `ZLP${Date.now().toString().slice(-10)}${String(i).padStart(4, '0')}`;
+    }
+
+    const customerName = customerNames[i % customerNames.length];
+    const customerEmail = customerName.toLowerCase().replace(' ', '.') + '@email.com';
+
     transactions.push({
       id: `txn-${i + 1}`,
-      user_id: `user-${(i % 30) + 1}`,
+      transaction_id: transactionId,
+      user_id: customerName,
+      email: customerEmail,
       amount: isVND ? baseAmount * 25000 : baseAmount,
       currency: isVND ? 'VND' : 'USD',
       payment_provider: provider,
       subscription_plan: plan,
       status: i < 52 ? 'success' : i < 57 ? 'pending' : 'failed',
       transaction_date: formatDate(date),
-      created_at: formatDate(date) + 'T' + String(10 + (i % 12)).padStart(2, '0') + ':30:00Z'
+      created_at: formatDate(date) + 'T' + String(10 + (i % 12)).padStart(2, '0') + ':30:00Z',
+      processing_seconds: Math.floor(seededRandom(i + 50) * 10) + 2
     });
   }
 
