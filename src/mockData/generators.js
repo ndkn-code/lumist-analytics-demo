@@ -719,20 +719,94 @@ export const generateInsights = (mode) => {
 
 /**
  * 22. Assessment/Attempt Durations
+ * Returns individual session records matching attempt_durations view
+ * Fields: attempt_date, net_seconds, gross_seconds, paused_seconds, student_profile_id
  */
 export const generateAttemptDurations = () => {
-  const buckets = [
-    { min_minutes: 0, max_minutes: 10, label: '0-10m', count: 1250 },
-    { min_minutes: 10, max_minutes: 20, label: '10-20m', count: 2340 },
-    { min_minutes: 20, max_minutes: 30, label: '20-30m', count: 3180 },
-    { min_minutes: 30, max_minutes: 45, label: '30-45m', count: 2890 },
-    { min_minutes: 45, max_minutes: 60, label: '45-60m', count: 1820 },
-    { min_minutes: 60, max_minutes: 90, label: '60-90m', count: 980 },
-    { min_minutes: 90, max_minutes: 120, label: '90-120m', count: 420 },
-    { min_minutes: 120, max_minutes: 999, label: '120m+', count: 180 },
+  const sessions = [];
+  const startDate = new Date(2025, 0, 1);
+  const endDate = new Date(2025, 5, 30);
+
+  // Generate ~50 unique student IDs
+  const studentIds = Array.from({ length: 50 }, (_, i) => `student-${i + 1}`);
+
+  // Duration distribution weights (simulating the bucket distribution)
+  const durationRanges = [
+    { min: 60, max: 600, weight: 0.10 },     // 1-10 minutes
+    { min: 600, max: 1200, weight: 0.18 },   // 10-20 minutes
+    { min: 1200, max: 1800, weight: 0.25 },  // 20-30 minutes (peak)
+    { min: 1800, max: 2700, weight: 0.22 },  // 30-45 minutes
+    { min: 2700, max: 3600, weight: 0.14 },  // 45-60 minutes
+    { min: 3600, max: 5400, weight: 0.08 },  // 60-90 minutes
+    { min: 5400, max: 7200, weight: 0.03 },  // 90-120 minutes
   ];
 
-  return buckets;
+  let sessionId = 1;
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    const dateString = formatDate(currentDate);
+    const dayOfWeek = getDayOfWeek(dateString);
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    // Base sessions per day: 30-60 weekday, 15-35 weekend
+    // More sessions closer to SAT dates
+    let baseSessions = isWeekend ? randomInRange(15, 35) : randomInRange(30, 60);
+
+    // Boost near SAT dates
+    if (isNearSAT(dateString)) {
+      baseSessions = Math.round(baseSessions * 1.6);
+    }
+
+    // Reduce during Tet
+    if (isDuringTet(dateString)) {
+      baseSessions = Math.round(baseSessions * 0.4);
+    }
+
+    // Generate sessions for this day
+    for (let i = 0; i < baseSessions; i++) {
+      // Pick a random student (some students study more than others)
+      const studentIndex = Math.floor(Math.pow(seededRandom(sessionId), 1.5) * studentIds.length);
+      const studentId = studentIds[studentIndex];
+
+      // Pick duration based on weighted distribution
+      const rand = seededRandom(sessionId + 1000);
+      let cumWeight = 0;
+      let selectedRange = durationRanges[0];
+      for (const range of durationRanges) {
+        cumWeight += range.weight;
+        if (rand < cumWeight) {
+          selectedRange = range;
+          break;
+        }
+      }
+
+      // Generate net_seconds within the selected range
+      const netSeconds = randomInRange(selectedRange.min, selectedRange.max);
+
+      // Paused time: 5-30% of net time
+      const pausedPercent = 0.05 + seededRandom(sessionId + 2000) * 0.25;
+      const pausedSeconds = Math.round(netSeconds * pausedPercent);
+
+      // Gross = net + paused
+      const grossSeconds = netSeconds + pausedSeconds;
+
+      sessions.push({
+        id: `attempt-${sessionId}`,
+        attempt_date: dateString,
+        student_profile_id: studentId,
+        net_seconds: netSeconds,
+        gross_seconds: grossSeconds,
+        paused_seconds: pausedSeconds
+      });
+
+      sessionId++;
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return sessions;
 };
 
 /**
