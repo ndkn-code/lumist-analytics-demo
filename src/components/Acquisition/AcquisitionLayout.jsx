@@ -11,7 +11,17 @@ const AcquisitionLayout = () => {
     const outletContext = useOutletContext();
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
+            {/* Page Header */}
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 className="text-xl md:text-3xl font-bold tracking-tight text-slate-800">
+                        Acquisition Funnel
+                    </h1>
+                </div>
+                {outletContext?.DateRangeFilterComponent}
+            </div>
+
             {/* Sub-tab Navigation */}
             <div className="flex gap-1 p-1 bg-slate-100 rounded-xl w-fit">
                 {SUB_TABS.map(({ path, label, icon: Icon, end }) => (
