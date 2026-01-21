@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Clean Light Theme with Purple Accents */
+    --background: 210 20% 98%;          /* Very light gray - bg-gray-50 equivalent */
+    --foreground: 224 71% 4%;           /* Near black - text-gray-900 */
+
+    --card: 0 0% 100%;                  /* Pure white cards */
+    --card-foreground: 224 71% 4%;      /* Dark text on cards */
+
+    --popover: 0 0% 100%;               /* White popovers */
+    --popover-foreground: 224 71% 4%;
+
+    --primary: 263 70% 50%;             /* Vibrant Purple - #7C3AED */
+    --primary-foreground: 0 0% 100%;    /* White text on purple */
+
+    --secondary: 220 14% 96%;           /* Light gray */
+    --secondary-foreground: 224 71% 4%;
+
+    --muted: 220 14% 96%;               /* Light gray for muted backgrounds */
+    --muted-foreground: 220 9% 46%;     /* Medium gray - text-gray-500 */
+
+    --accent: 263 70% 50%;              /* Purple accent */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;           /* Red for errors */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;              /* Very subtle gray border - border-gray-100 */
+    --input: 220 13% 91%;
+    --ring: 263 70% 50%;                /* Purple focus ring */
+
+    --radius: 0.75rem;                  /* Slightly larger for modern look */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Custom styles for react-datepicker to match light theme */
+@layer components {
+  .react-datepicker {
+    @apply bg-white border-gray-200 rounded-xl shadow-lg font-sans;
+  }
+
+  .react-datepicker__header {
+    @apply bg-gray-50 border-b border-gray-200 rounded-t-xl;
+  }
+
+  .react-datepicker__current-month {
+    @apply text-gray-900 font-semibold;
+  }
+
+  .react-datepicker__day-name {
+    @apply text-gray-500;
+  }
+
+  .react-datepicker__day {
+    @apply text-gray-700 hover:bg-violet-100 hover:text-violet-700 rounded-lg;
+  }
+
+  .react-datepicker__day--selected,
+  .react-datepicker__day--in-selecting-range,
+  .react-datepicker__day--in-range {
+    @apply bg-violet-600 text-white hover:bg-violet-700;
+  }
+
+  .react-datepicker__day--keyboard-selected {
+    @apply bg-violet-100 text-violet-700;
+  }
+
+  .react-datepicker__day--today {
+    @apply font-bold;
+  }
+
+  .react-datepicker__navigation-icon::before {
+    @apply border-gray-400;
+  }
+
+  .react-datepicker__navigation:hover *::before {
+    @apply border-violet-600;
+  }
+}
+
+/* Premium SaaS Typography - Inter as primary */
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    @apply tracking-tight;
+  }
+}
+
+/* Pulse animation for map markers */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.marker-pulse {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* Hide scrollbar for horizontal scroll areas */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Mobile-specific fixes */
+@layer utilities {
+  /* Prevent text selection on touch devices for interactive elements */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Safe area insets for notched devices */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Date picker mobile improvements */
+@media (max-width: 640px) {
+  .react-datepicker {
+    @apply text-sm;
+    font-size: 14px !important;
+  }
+
+  .react-datepicker__month-container {
+    width: 100%;
+  }
+
+  .react-datepicker__day {
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    margin: 0.1rem;
+  }
+
+  .react-datepicker__day-name {
+    width: 2rem;
+    margin: 0.1rem;
+  }
+
+  .react-datepicker-popper {
+    z-index: 9999 !important;
+  }
+
+  /* Make date picker popover not overflow screen */
+  .react-datepicker-popper[data-placement^="bottom"] {
+    transform: translate3d(0, 40px, 0) !important;
+  }
+
+  .react-datepicker-popper[data-placement^="top"] {
+    transform: translate3d(0, -10px, 0) !important;
+  }
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Improve tap targets on mobile - removed aggressive min-height/min-width
+   that was causing navigation items to overlap */
