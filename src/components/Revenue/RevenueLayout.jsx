@@ -120,9 +120,9 @@ const RevenueLayout = () => {
 
                 if (error) {
                     console.error('Error fetching exchange rates:', error);
-                    // Set default rates as fallback
+                    // Set default rates as fallback (1 USD = 26,100 VND)
                     setExchangeRates(new Map([
-                        ['VND', 25000],
+                        ['VND', 26100],
                         ['EUR', 0.92],
                         ['GBP', 0.79]
                     ]));
@@ -135,9 +135,9 @@ const RevenueLayout = () => {
                 }
             } catch (err) {
                 console.error('Failed to fetch exchange rates:', err);
-                // Set default rates as fallback
+                // Set default rates as fallback (1 USD = 26,100 VND)
                 setExchangeRates(new Map([
-                    ['VND', 25000],
+                    ['VND', 26100],
                     ['EUR', 0.92],
                     ['GBP', 0.79]
                 ]));

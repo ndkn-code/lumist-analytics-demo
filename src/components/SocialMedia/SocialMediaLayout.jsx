@@ -42,7 +42,7 @@ const PLATFORMS = [
         color: '#E4405F',
         bgActive: 'bg-gradient-to-r from-[#833AB4] via-[#E4405F] to-[#FCAF45]',
         textActive: 'text-white',
-        available: false
+        available: true
     },
     {
         id: 'tiktok',
@@ -50,9 +50,9 @@ const PLATFORMS = [
         path: '/social-media/tiktok',
         icon: Video,
         color: '#ff0050',
-        bgActive: 'bg-[#ff0050]',
+        bgActive: 'bg-black',
         textActive: 'text-white',
-        available: false
+        available: true
     }
 ];
 

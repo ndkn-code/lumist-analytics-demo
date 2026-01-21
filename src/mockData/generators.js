@@ -440,7 +440,7 @@ export const generateUserSubscriptions = () => {
  */
 export const generateTransactions = () => {
   const providers = ['stripe', 'vnpay', 'zalopay'];
-  const plans = ['1month', '3months', '6months', 'lifetime'];
+  const plans = ['1month', '3months', '6months'];
 
   // Vietnamese-style customer names
   const customerNames = [
@@ -452,6 +452,25 @@ export const generateTransactions = () => {
     'Phong Bui', 'Tam Vo', 'Hanh Ly', 'Son Dinh', 'Uyen Dang'
   ];
 
+  // VND to USD exchange rate
+  const VND_RATE = 26100;
+
+  // VND pricing (local pricing - cheaper)
+  // 1 month: ~47,000 VND ($1.80), 3 months: ~95,000 VND ($3.64), 6 months: ~143,000 VND ($5.48)
+  const vndPricing = {
+    '1month': 1225000,   // ~$47 equivalent but in VND
+    '3months': 2475000,  // ~$95 equivalent but in VND
+    '6months': 3725000,  // ~$143 equivalent but in VND
+  };
+
+  // USD pricing via Stripe (international pricing - ~4.3x more expensive)
+  // These are the actual USD amounts charged via Stripe
+  const usdPricing = {
+    '1month': 49,     // $49 USD
+    '3months': 99,    // $99 USD
+    '6months': 149,   // $149 USD
+  };
+
   const transactions = [];
 
   for (let i = 0; i < 60; i++) {
@@ -462,12 +481,16 @@ export const generateTransactions = () => {
     const provider = providers[Math.floor(seededRandom(i) * providers.length)];
     const isVND = provider === 'vnpay' || provider === 'zalopay';
     const plan = plans[Math.floor(seededRandom(i + 25) * plans.length)];
-    const baseAmount = plan === '1month' ? 49 : plan === '3months' ? 99 : plan === '6months' ? 149 : 299;
+
+    // Get amount based on provider and plan
+    // Stripe charges in USD, VNPay/ZaloPay charge in VND
+    const amount = isVND ? vndPricing[plan] : usdPricing[plan];
+    const currency = isVND ? 'VND' : 'USD';
 
     // Generate realistic transaction ID based on provider
     let transactionId;
     if (provider === 'stripe') {
-      transactionId = `pi_${Date.now().toString(36)}${i.toString(36).padStart(4, '0')}`;
+      transactionId = `pi_mknpaemt001${String(i).padStart(4, '0')}`;
     } else if (provider === 'vnpay') {
       transactionId = `VNP${formatDate(date).replace(/-/g, '')}${String(i + 1000).padStart(6, '0')}`;
     } else {
@@ -482,8 +505,8 @@ export const generateTransactions = () => {
       transaction_id: transactionId,
       user_id: customerName,
       email: customerEmail,
-      amount: isVND ? baseAmount * 25000 : baseAmount,
-      currency: isVND ? 'VND' : 'USD',
+      amount: amount,
+      currency: currency,
       payment_provider: provider,
       subscription_plan: plan,
       status: i < 52 ? 'success' : i < 57 ? 'pending' : 'failed',
@@ -1001,10 +1024,15 @@ export const generateAttemptDurations = () => {
 
 /**
  * 23. Daily Exchange Rates
+ * Stripe transactions are in USD, VNPay/ZaloPay are in VND
+ * Rate: 1 USD = 26,100 VND
+ * Format matches the query: currency_code, rate_to_usd
  */
 export const generateExchangeRates = () => {
   return [
-    { date: '2025-06-30', usd_to_vnd: 25000, source: 'mock' }
+    { rate_date: '2025-06-30', currency_code: 'VND', rate_to_usd: 26100 },
+    { rate_date: '2025-06-30', currency_code: 'EUR', rate_to_usd: 0.92 },
+    { rate_date: '2025-06-30', currency_code: 'GBP', rate_to_usd: 0.79 }
   ];
 };
 
